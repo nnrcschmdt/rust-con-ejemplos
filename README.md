@@ -20,7 +20,7 @@ $ mdbook serve
 [instala Rust]: https://www.rust-lang.org/es/tools/install
 
 Para poder ejecutar los ejemplos, debes estar conectado a Internet; ¡Sin
-embargo, puede leer todo el contenido sin conexión!
+embargo, puedes leer todo el contenido sin conexión!
 
 ## Contribuir
 
