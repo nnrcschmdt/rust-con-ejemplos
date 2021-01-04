@@ -1,56 +1,53 @@
-# Rust By Example
+# Rust con ejemplos
 
-[![Build Status][travis-badge]][travis-repo]
+Aprende Rust con ejemplos (editor de código en vivo incluido)
 
-[travis-badge]: https://travis-ci.com/rust-lang/rust-by-example.svg?branch=master
-[travis-repo]: https://travis-ci.com/rust-lang/rust-by-example
+## Usar
 
-Learn Rust with examples (Live code editor included)
+Si deseas leer Rust con ejemplos, puedes visitar
+<https://rico-schmidt.name/rust-con-ejemplos/> para leerlo en línea.
 
-## Using
-
-If you'd like to read Rust by Example, you can visit <https://doc.rust-lang.org/rust-by-example/>
-to read it online.
-
-If you'd like to read it locally, [install Rust], and then:
+Si deseas leerlo localmente, [instala Rust], y luego:
 
 ```bash
-$ git clone https://github.com/rust-lang/rust-by-example
+$ git clone https://github.com/nnrcschmdt/rust-con-ejemplos
 $ cd rust-by-example
 $ cargo install mdbook
 $ mdbook build
 $ mdbook serve
 ```
 
-[install Rust]: https://www.rust-lang.org/tools/install
+[instala Rust]: https://www.rust-lang.org/es/tools/install
 
-To be able to run the examples, you must be connected to the internet; you can
-read all content offline, however!
+Para poder ejecutar los ejemplos, debe estar conectado a Internet; ¡Sin
+embargo, puede leer todo el contenido sin conexión!
 
-## Contributing
+## Contribuir
 
-Please see the [CONTRIBUTING.md] file for more details.
+Consulta el archivo [CONTRIBUTING.md] para obtener más detalles.
 
-[CONTRIBUTING.md]: https://github.com/rust-lang/rust-by-example/blob/master/CONTRIBUTING.md
+[CONTRIBUTING.md]:
+https://github.com/rust-lang/rust-by-example/blob/master/CONTRIBUTING.md
 
-## Translations to other languages
+## Traducciones a otros idiomas
 
-* [Chinese](https://github.com/rust-lang-cn/rust-by-example-cn)
-* [Japanese](https://github.com/rust-lang-ja/rust-by-example-ja)
-* [French](https://github.com/Songbird0/FR_RBE)
-* [Russian](https://github.com/ruRust/rust-by-example)
+* [Chino](https://github.com/rust-lang-cn/rust-by-example-cn)
+* [Japones](https://github.com/rust-lang-ja/rust-by-example-ja)
+* [Francés](https://github.com/Songbird0/FR_RBE)
+* [Ruso](https://github.com/ruRust/rust-by-example)
+* [Español](https://github.com/nnrcschmdt/rust-con-ejemplos)
 
-## License
+## Licencia
 
-Rust by Example is licensed under either of
+Rust con ejemplos tiene licencia bajo, según prefieras,
 
-* Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
+* Licencia Apache, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) o
   <http://www.apache.org/licenses/LICENSE-2.0>)
-* MIT license ([LICENSE-MIT](LICENSE-MIT) or
+* Licencia MIT ([LICENSE-MIT](LICENSE-MIT) o
   <http://opensource.org/licenses/MIT>)
 
-at your option.
+A menos que indiques explícitamente lo contrario, cualquier contribución
+enviada intencionalmente para su inclusión en Rust con ejemplos por ti, como se
+define en la licencia Apache-2.0, será con doble licencia como se indica
+arriba, sin términos o condiciones adicionales.
 
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in Rust by Example by you, as defined in the Apache-2.0 license, shall be
-dually licensed as above, without any additional terms or conditions.

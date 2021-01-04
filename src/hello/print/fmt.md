@@ -1,76 +1,77 @@
-# Formatting
+# Formateo 
 
-We've seen that formatting is specified via a *format string*:
+Hemos visto que el formato se especifica mediante una *cadena de formateo*:
 
 * `format!("{}", foo)` -> `"3735928559"`
-* `format!("0x{:X}", foo)` ->
-  [`"0xDEADBEEF"`][deadbeef]
+* `format!("0x{:X}", foo)` -> [`"0xDEADBEEF"`][deadbeef]
 * `format!("0o{:o}", foo)` -> `"0o33653337357"`
 
-The same variable (`foo`) can be formatted differently depending on which
-*argument type* is used: `X` vs `o` vs *unspecified*.
+La misma variable (`foo`) se puede formatear de manera diferente dependiendo de
+qué *tipo de argumento* se use: `X` vs `o` vs *no especificado*.
 
-This formatting functionality is implemented via traits, and there is one trait
-for each argument type. The most common formatting trait is `Display`, which
-handles cases where the argument type is left unspecified: `{}` for instance.
+Esta funcionalidad de formateo se implementa a través de rasgos y hay un rasgo
+para cada tipo de argumento. El rasgo de formato más común es `Display`, que
+maneja casos donde el tipo de argumento se deja sin especificar: `{}` por
+ejemplo.
 
 ```rust,editable
 use std::fmt::{self, Formatter, Display};
 
-struct City {
-    name: &'static str,
-    // Latitude
+struct Ciudad {
+    nombre: &'static str,
+    // Latitud
     lat: f32,
-    // Longitude
+    // Longitud
     lon: f32,
 }
 
-impl Display for City {
-    // `f` is a buffer, and this method must write the formatted string into it
+impl Display for Ciudad {
+    // `f` es un búfer, y este método debe escribir la cadena formateada en él
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         let lat_c = if self.lat >= 0.0 { 'N' } else { 'S' };
         let lon_c = if self.lon >= 0.0 { 'E' } else { 'W' };
 
-        // `write!` is like `format!`, but it will write the formatted string
-        // into a buffer (the first argument)
+        // `write!` es como `format!`, pero escribirá la cadena formateada en
+        // un búfer (el primer argumento)
         write!(f, "{}: {:.3}°{} {:.3}°{}",
-               self.name, self.lat.abs(), lat_c, self.lon.abs(), lon_c)
+               self.nombre, self.lat.abs(), lat_c, self.lon.abs(), lon_c)
     }
 }
 
 #[derive(Debug)]
 struct Color {
-    red: u8,
-    green: u8,
-    blue: u8,
+    rojo: u8,
+    verde: u8,
+    azul: u8,
 }
 
 fn main() {
-    for city in [
-        City { name: "Dublin", lat: 53.347778, lon: -6.259722 },
-        City { name: "Oslo", lat: 59.95, lon: 10.75 },
-        City { name: "Vancouver", lat: 49.25, lon: -123.1 },
+    for ciudad in [
+        Ciudad { nombre: "Dublin", lat: 53.347778, lon: -6.259722 },
+        Ciudad { nombre: "Oslo", lat: 59.95, lon: 10.75 },
+        Ciudad { nombre: "Vancouver", lat: 49.25, lon: -123.1 },
     ].iter() {
-        println!("{}", *city);
+        println!("{}", *ciudad);
     }
     for color in [
-        Color { red: 128, green: 255, blue: 90 },
-        Color { red: 0, green: 3, blue: 254 },
-        Color { red: 0, green: 0, blue: 0 },
+        Color { rojo: 128, verde: 255, azul: 90 },
+        Color { rojo: 0, verde: 3, azul: 254 },
+        Color { rojo: 0, verde: 0, azul: 0 },
     ].iter() {
-        // Switch this to use {} once you've added an implementation
-        // for fmt::Display.
+        // Cambie esto para usar {} una vez que haya agregado una
+        // implementación para fmt::Display.
         println!("{:?}", *color);
     }
 }
 ```
 
-You can view a [full list of formatting traits][fmt_traits] and their argument
-types in the [`std::fmt`][fmt] documentation.
+Puedes ver una [lista completa de rasgos de formateo][fmt_traits] y sus tipos
+de argumentos en la documentación de [`std::fmt`][fmt].
 
-### Activity
-Add an implementation of the `fmt::Display` trait for the `Color` struct above
-so that the output displays as:
+### Actividad
+
+Agrega una implementación del rasgo `fmt::Display` para la estructura `Color`
+anterior para que la salida se muestre como:
 
 ```text
 RGB (128, 255, 90) 0x80FF5A
@@ -78,11 +79,12 @@ RGB (0, 3, 254) 0x0003FE
 RGB (0, 0, 0) 0x000000
 ```
 
-Two hints if you get stuck:
- * You [may need to list each color more than once][named_parameters],
- * You can [pad with zeros to a width of 2][fmt_width] with `:02`.
+Dos pistas si te quedas atascado:
+* Es posible que [tenga que enumerar cada color más de una
+  vez][named_parameters],
+* Puedes [rellenar con ceros hasta un ancho de 2][fmt_width] con `:02`.
 
-### See also:
+### Ve también
 
 [`std::fmt`][fmt]
 

@@ -1,67 +1,71 @@
-# Testcase: List
+# Caso de prueba: Lista
 
-Implementing `fmt::Display` for a structure where the elements must each be
-handled sequentially is tricky. The problem is that each `write!` generates a
-`fmt::Result`. Proper handling of this requires dealing with *all* the
-results. Rust provides the `?` operator for exactly this purpose.
+Implementar `fmt::Display` para una estructura donde los elementos deben
+manejarse secuencialmente es complicado. El problema es que cada `write!`
+genera un `fmt::Result`. El manejo adecuado de esto requiere lidiar con *todos*
+los resultados. Rust proporciona el operador `?` exactamente para este
+propósito.
 
-Using `?` on `write!` looks like this:
+Usar `?` en `write!` se ve así:
 
 ```rust,ignore
-// Try `write!` to see if it errors. If it errors, return
-// the error. Otherwise continue.
+// Prueba `write!` para ver si hay errores. Si falla, regresa el error. De lo
+// contrario, continúa.
 write!(f, "{}", value)?;
 ```
 
-With `?` available, implementing `fmt::Display` for a `Vec` is
-straightforward:
+Con `?` disponible, implementar `fmt::Display` para un `Vec` es sencillo:
 
 ```rust,editable
-use std::fmt; // Import the `fmt` module.
+use std::fmt; // Importa el módulo `fmt`.
 
-// Define a structure named `List` containing a `Vec`.
-struct List(Vec<i32>);
+// Define una estructura llamada `Lista` que contenga un `Vec`.
+struct Lista(Vec<i32>);
 
-impl fmt::Display for List {
+impl fmt::Display for Lista {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Extract the value using tuple indexing,
-        // and create a reference to `vec`.
+        // Extrae el valor usando la indexación de tuplas, y crea una
+        // referencia a `vec`.
         let vec = &self.0;
 
         write!(f, "[")?;
 
-        // Iterate over `v` in `vec` while enumerating the iteration
-        // count in `count`.
+
+        // Itera sobre `v` en `vec` mientras enumera el contador de iteración
+        // en `count`.
         for (count, v) in vec.iter().enumerate() {
-            // For every element except the first, add a comma.
-            // Use the ? operator to return on errors.
+            // Para cada elemento excepto el primero, agrega una coma.
+            // Utiliza el operador ? para devolver los errores.
             if count != 0 { write!(f, ", ")?; }
             write!(f, "{}", v)?;
         }
 
-        // Close the opened bracket and return a fmt::Result value.
+        // Cierra el corchete abierto y devuelve un valor fmt::Result.
         write!(f, "]")
     }
 }
 
 fn main() {
-    let v = List(vec![1, 2, 3]);
+    let v = Lista(vec![1, 2, 3]);
     println!("{}", v);
 }
 ```
 
-### Activity
+### Actividad
 
-Try changing the program so that the index of each element in the vector is also printed. The new output should look like this:
+Intenta cambiar el programa para que también se imprima el índice de cada
+elemento en el vector. La nueva salida debería verse así:
 
 ```rust,ignore
 [0: 1, 1: 2, 2: 3]
 ```
 
+<!--
 ### See also:
 
 [`for`][for], [`ref`][ref], [`Result`][result], [`struct`][struct],
 [`?`][q_mark], and [`vec!`][vec]
+-->
 
 [for]: ../../../flow_control/for.md
 [result]: ../../../std/result.md

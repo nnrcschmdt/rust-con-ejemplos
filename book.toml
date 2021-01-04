@@ -1,7 +1,7 @@
 [book]
-title = "Rust By Example"
-description = "Rust by Example (RBE) is a collection of runnable examples that illustrate various Rust concepts and standard libraries."
-author = "The Rust Community"
+title = "Rust con ejemplos"
+description = "Rust con ejemplos es una colección de ejemplos ejecutables que ilustran varios conceptos y bibliotecas estándar de Rust."
+author = "La Comunidad Rust"
 
 [output.html.playpen]
 editable = true

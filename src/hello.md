@@ -1,49 +1,50 @@
-# Hello World
+# Hola Mundo
 
-This is the source code of the traditional Hello World program.
+Este es el código fuente del programa tradicional Hola Mundo.
 
 ```rust,editable
-// This is a comment, and is ignored by the compiler
-// You can test this code by clicking the "Run" button over there ->
-// or if you prefer to use your keyboard, you can use the "Ctrl + Enter" shortcut
 
-// This code is editable, feel free to hack it!
-// You can always return to the original code by clicking the "Reset" button ->
+// Este es un comentario y el compilador lo ignora. Puedes probar este código
+// haciendo clic en el botón "Ejecutar" que se encuentra allí -> o si prefieres
+// usar su teclado, puedes usar el atajo "Ctrl + Enter"
 
-// This is the main function
+// Este código es editable, ¡no dudes en hackearlo!
+// Siempre puedes volver al código original haciendo clic en el botón
+// "Restablecer" ->
+
+// Esta es la función principal
 fn main() {
-    // Statements here are executed when the compiled binary is called
+    // Las declaraciones aquí se ejecutan cuando se llama al binario compilado
 
-    // Print text to the console
-    println!("Hello World!");
+    // Imprimir texto en la consola
+    println!("¡Hola, mundo!");
 }
 ```
 
-`println!` is a [*macro*][macros] that prints text to the
-console.
+`println!` es un macro <!--[macro][macros]--> que imprime texto en la consola.
 
-A binary can be generated using the Rust compiler: `rustc`.
+Se puede generar un binario usando el compilador Rust: `rustc`.
 
 ```bash
 $ rustc hello.rs
 ```
 
-`rustc` will produce a `hello` binary that can be executed.
+`rustc` producirá un binario `hello` que se puede ejecutar.
 
 ```bash
 $ ./hello
-Hello World!
+¡Hola, mundo!
 ```
 
-### Activity
+### Actividad
 
-Click 'Run' above to see the expected output. Next, add a new
-line with a second `println!` macro so that the output
-shows:
+Haz clic en 'Ejecutar' arriba para ver el resultado esperado. A continuación,
+agrega una nueva línea con un segundo macro `println!` para que la salida
+muestre:
 
 ```text
-Hello World!
-I'm a Rustacean!
+¡Hola, mundo!
+¡Soy un Rustáceo!
 ```
 
 [macros]: macros.md

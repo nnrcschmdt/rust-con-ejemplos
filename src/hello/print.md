@@ -1,89 +1,97 @@
-# Formatted print
+# Impresión formateada
 
-Printing is handled by a series of [`macros`][macros] defined in [`std::fmt`][fmt]
-some of which include:
+La impresión es manejada por una serie de <!--[`macros`][macros]--> macros
+definidos en [`std::fmt`][fmt] algunos de los cuales incluyen:
 
-* `format!`: write formatted text to [`String`][string]
-* `print!`: same as `format!` but the text is printed to the console (io::stdout).
-* `println!`: same as `print!` but a newline is appended.
-* `eprint!`: same as `format!` but the text is printed to the standard error (io::stderr).
-* `eprintln!`: same as `eprint!`but a newline is appended.
+* `format!`: escribe texto formateado en `String` <!--[`String`][string] -->
+* `print!`: es igual que `format!` pero el texto se imprime en la consola
+  (io::stdout).
+* `println!`: es igual que `print!` pero se añade una nueva línea.
+* `eprint!`: es igual que `format!` pero el texto se imprime en error estándar
+  (io::stderr).
+* `eprintln!`: es igual que `eprint!` pero se añade una nueva línea.
 
-All parse text in the same fashion. As a plus, Rust checks formatting
-correctness at compile time.
+Todos analizan el texto de la misma manera. Además, Rust comprueba que el
+formato sea correcto en el momento de la compilación.
 
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    // In general, the `{}` will be automatically replaced with any
-    // arguments. These will be stringified.
-    println!("{} days", 31);
+    // En general, el `{}` se reemplazará automáticamente con cualquier
+    // argumento. Estos serán convertidos en cadenas de texto.
 
-    // Without a suffix, 31 becomes an i32. You can change what type 31 is
-    // by providing a suffix. The number 31i64 for example has the type i64.
+    println!("{} días", 31);
 
-    // There are various optional patterns this works with. Positional
-    // arguments can be used.
-    println!("{0}, this is {1}. {1}, this is {0}", "Alice", "Bob");
+    // Sin sufijo, 31 se convierte en i32. Puedes cambiar el tipo 31
+    // proporcionando un sufijo. El número 31i64, por ejemplo, tiene el tipo
+    // i64.
 
-    // As can named arguments.
-    println!("{subject} {verb} {object}",
-             object="the lazy dog",
-             subject="the quick brown fox",
-             verb="jumps over");
+    // Hay varios patrones opcionales con los que funciona. Se pueden utilizar
+    // argumentos posicionales.
+    println!("{0}, este es {1}. {1}, esta es {0}", "Alice", "Bob");
 
-    // Special formatting can be specified after a `:`.
-    println!("{} of {:b} people know binary, the other half doesn't", 1, 2);
+    // También se pueden usar argumentos con nombre
+    println!("{sujeto} {verbo} {objeto}",
+             objeto="el perro flojo",
+             subject="el veloz zorro marrón",
+             verb="salta por encima");
 
-    // You can right-align text with a specified width. This will output
-    // "     1". 5 white spaces and a "1".
-    println!("{number:>width$}", number=1, width=6);
+    // Se puede especificar un formato especial después de un `:`.
+    println!("{} de {:b} la gente sabe binario, la otra mitad no", 1, 2);
 
-    // You can pad numbers with extra zeroes. This will output "000001".
-    println!("{number:>0width$}", number=1, width=6);
+    // Puedes alinear a la derecha el texto con un ancho especificado. Esto
+    // generará "     1". 5 espacios y un "1".
+    println!("{número:>ancho$}", número=1, ancho=6);
 
-    // Rust even checks to make sure the correct number of arguments are
-    // used.
-    println!("My name is {0}, {1} {0}", "Bond");
-    // FIXME ^ Add the missing argument: "James"
+    // Puedes rellenar números con ceros adicionales. Esto generará "000001".
+    println!("{número:>0ancho$}", número=1, ancho=6);
 
-    // Create a structure named `Structure` which contains an `i32`.
+    // Rust incluso verifica para asegurarse de que el número correcto de
+    // argumentos sea usado.
+    println!("Mi nombre es {0}, {1} {0}", "Bond");
+    // FIXME ^ Agrega el argumento que falta: "James"
+
+    // Crea una estructura llamada "Estructura" que contenga un "i32".
     #[allow(dead_code)]
-    struct Structure(i32);
+    struct Estructura(i32);
 
-    // However, custom types such as this structure require more complicated
-    // handling. This will not work.
-    println!("This struct `{}` won't print...", Structure(3));
-    // FIXME ^ Comment out this line.
+    // Sin embargo, los tipos personalizados como esta estructura requieren un
+    // manejo más complicado. Esto no funcionará.
+    println!("Esta estructura` {} `no se imprimirá ...", Estructura(3));
+    // FIXME ^ Comenta esta línea.
 }
 ```
 
-[`std::fmt`][fmt] contains many [`traits`][traits] which govern the display
-of text. The base form of two important ones are listed below:
+[`std::fmt`][fmt] contiene muchos [`rasgos`][traits] que gobiernan la
+visualización del texto. El formateo base de dos importantes se enumeran a
+continuación:
 
-* `fmt::Debug`: Uses the `{:?}` marker. Format text for debugging purposes.
-* `fmt::Display`: Uses the `{}` marker. Format text in a more elegant, user
-friendly fashion.
+* `fmt::Debug`: Utiliza el marcador `{:?}`. Formatea el texto con fines de
+  depuración.
+* `fmt::Display`: Utiliza el marcador `{}`. Formatea el texto de una manera más
+  elegante y fácil de usar.
 
-Here, we used `fmt::Display` because the std library provides implementations
-for these types. To print text for custom types, more steps are required.
+Aquí, usamos `fmt::Display` porque la biblioteca estándar proporciona
+implementaciones para estos tipos. Para imprimir texto para tipos
+personalizados, se requieren más pasos.
 
-Implementing the `fmt::Display` trait automatically implements the
-[`ToString`] trait which allows us to [convert] the type to [`String`][string].
+Implementar del rasgo `fmt::Display` implementa automáticamente el rasgo
+[`ToString`] que nos permite convertir <!-- [convert] --> el tipo a `String`.
+<!-- [`String`][string]. -->
 
-### Activities
+### Actividades
 
- * Fix the two issues in the above code (see FIXME) so that it runs without
-   error.
- * Add a `println!` macro that prints: `Pi is roughly 3.142` by controlling
-   the number of decimal places shown. For the purposes of this exercise,
-   use `let pi = 3.141592` as an estimate for pi. (Hint: you may need to
-   check the [`std::fmt`][fmt] documentation for setting the number of
-   decimals to display)
+* Soluciona los dos problemas en el código anterior (consulta los FIXME) para
+  que se ejecute sin errores.
+* Agrega un macro `println!` que imprima: `Pi es aproximadamente 3.142`
+  controlando el número de lugares decimales mostrados. Para los propósitos de
+  este ejercicio, usa `let pi = 3.141592` como una estimación de pi. (Sugerencia:
+  es posible que debas consultar la documentación [`std::fmt`][fmt] para
+  configurar el número de decimales que se mostrarán)
 
-### See also:
-
-[`std::fmt`][fmt], [`macros`][macros], [`struct`][structs],
-and [`traits`][traits]
+### Ve también:
+ 
+[`std::fmt`][fmt]<!--, [`macros`][macros], [`struct`][structs] --> y
+[`traits`][traits]
 
 [fmt]: https://doc.rust-lang.org/std/fmt/
 [macros]: ../macros.md
