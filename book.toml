@@ -3,9 +3,19 @@ title = "Rust con ejemplos"
 description = "Rust con ejemplos es una colección de ejemplos ejecutables que ilustran varios conceptos y bibliotecas estándar de Rust."
 author = "La Comunidad Rust"
 
-[output.html.playpen]
-editable = true
-editor = "ace"
+[output.html]
+theme = "rust-con-ejemplos"
+default-theme = "rust"
+git-repository-url = "https://github.com/nnrcschmdt/rust-con-ejemplos"
+preferred-dark-theme = "coal"
+site-url = "/rust-con-ejemplos"
 
 [output.html.fold]
 enable = true
+
+[output.html.print]
+enable = false
+
+[output.html.playpen]
+editable = true
+editor = "ace"
