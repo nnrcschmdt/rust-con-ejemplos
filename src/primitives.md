@@ -1,61 +1,64 @@
-# Primitives
+# Tipos elementales 
 
-Rust provides access to a wide variety of `primitives`. A sample includes:
+Rust proporciona acceso a una amplia variedad de `primitives`, tipos
+elementales. Una muestra incluye:
 
+### Escalares 
 
-### Scalar Types
+* enteros con signo: `i8`,` i16`, `i32`,` i64`, `i128` e `isize` (tamaño del
+  puntero)
+* enteros sin signo: `u8`,` u16`, `u32`,` u64`, `u128` y `usize` (tamaño del
+  puntero)
+* coma flotante: `f32`,` f64`
+* `char` valores escalares Unicode como `'a'`, `'α'` y `'∞'` (4 bytes cada uno)
+* `bool` ya sea `true` o `false`
+* y el tipo de unidad `()`, cuyo único valor posible es una tupla vacía: `()`
 
-* signed integers: `i8`, `i16`, `i32`, `i64`, `i128` and `isize` (pointer size)
-* unsigned integers: `u8`, `u16`, `u32`, `u64`, `u128` and `usize` (pointer
-  size)
-* floating point: `f32`, `f64`
-* `char` Unicode scalar values like `'a'`, `'α'` and `'∞'` (4 bytes each)
-* `bool` either `true` or `false`
-* and the unit type `()`, whose only possible value is an empty tuple: `()`
+A pesar de que el valor de un tipo de unidad es una tupla, no se considera un
+tipo compuesto porque no contiene múltiples valores.
 
-Despite the value of a unit type being a tuple, it is not considered a
-compound type because it does not contain multiple values. 
+### Tipos compuestos
 
-### Compound Types
+* vectores como `[1, 2, 3]`
+* tuplas como `(1, true)`
 
-* arrays like `[1, 2, 3]`
-* tuples like `(1, true)`
-
-Variables can always be *type annotated*. Numbers may additionally be
-annotated via a *suffix* or *by default*. Integers default to `i32` and
-floats to `f64`. Note that Rust can also infer types from context.
+El tipo de las variables siempre puede ser anotado. Los números también pueden
+ser anotados mediante un *sufijo* o con un valor *predeterminado*.  Los números
+enteros están predeterminados en `i32` y los números de coma flotante `f64`.
+Ten en cuenta que Rust también puede inferir tipos a partir del contexto.
 
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    // Variables can be type annotated.
-    let logical: bool = true;
+    // El tipo de las variables puede ser anotado.
+    let booleano: bool = true;
 
-    let a_float: f64 = 1.0;  // Regular annotation
-    let an_integer   = 5i32; // Suffix annotation
+    let una_coma_flotante: f64 = 1.0;  // Anotación regular
+    let un_entero              = 5i32; // Anotación mediante sufijo
 
-    // Or a default will be used.
-    let default_float   = 3.0; // `f64`
-    let default_integer = 7;   // `i32`
+    // O se utilizará un valor predeterminado.
+    let coma_flotante_predeterminado = 3.0; // `f64`
+    let entero_predeterminado        = 7;   // `i32`
     
-    // A type can also be inferred from context 
-    let mut inferred_type = 12; // Type i64 is inferred from another line
-    inferred_type = 4294967296i64;
+    // Un tipo también se puede inferir del contexto
+    let mut tipo_inferido = 12; // El tipo i64 se infiere de otra línea
+    tipo_inferido = 4294967296i64;
     
-    // A mutable variable's value can be changed.
-    let mut mutable = 12; // Mutable `i32`
+    // Se puede cambiar el valor de una variable mutable.
+    let mut mutable = 12; // `i32` mutable
     mutable = 21;
     
-    // Error! The type of a variable can't be changed.
+    // ¡Error! El tipo de una variable no se puede cambiar.
     mutable = true;
     
-    // Variables can be overwritten with shadowing.
+    // Las variables se pueden sobrescribir con sombreado (shadowing).
     let mutable = true;
 }
 ```
 
-### See also:
+### Ve también
 
-[the `std` library][std], [`mut`][mut], [`inference`][inference], and [`shadowing`][shadowing]
+[la biblioteca `std`][std]
+<!--, [`mut`][mut], [`inference`][inference], and [`shadowing`][shadowing] -->
 
 [std]: https://doc.rust-lang.org/std/
 [mut]: variable_bindings/mut.md
