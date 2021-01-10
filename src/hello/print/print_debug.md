@@ -1,4 +1,4 @@
-# Para depuración
+# Impresión para depurar
 
 Todos los tipos que quieran utilizar `rasgos` de formateo `std::fmt` requieren
 una implementación para poder imprimir. Las implementaciones automáticas solo
@@ -10,12 +10,11 @@ El rasgo `fmt::Debug` hace que esto sea muy sencillo. Todos los tipos pueden
 cierto para `fmt::Display` que debe implementarse manualmente.
 
 ```rust
-// Esta estructura no se puede imprimir con `fmt::Display` o
-// con `fmt::Debug`.
+// Esta estructura no se puede imprimir con `fmt::Display` o con `fmt::Debug`.
 struct Inimprimible(i32);
 
-// El atributo `derive` crea automáticamente la implementación
-// requerida para hacer esta `estructura` imprimible con `fmt::Debug`.
+// El atributo `derive` crea automáticamente la implementación requerida para
+// hacer esta `estructura` imprimible con `fmt::Debug`.
 #[derive(Debug)]
 struct ImprimibleEnDepuracion(i32);
 ```

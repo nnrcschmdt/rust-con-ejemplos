@@ -1,4 +1,4 @@
-# Para mostrar
+# Impresión para mostrar
 
 `fmt::Debug` apenas parece compacto y limpio, por lo que a menudo es ventajoso
 personalizar la apariencia de salida. Esto se hace implementando manualmente
