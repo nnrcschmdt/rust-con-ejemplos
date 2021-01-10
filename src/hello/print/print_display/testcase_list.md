@@ -1,4 +1,4 @@
-# Caso de prueba: Lista
+# Caso de prueba: Impresión de una lista
 
 Implementar `fmt::Display` para una estructura donde los elementos deben
 manejarse secuencialmente es complicado. El problema es que cada `write!`

@@ -1,95 +1,102 @@
-# Tuples
+# Tuplas
 
-A tuple is a collection of values of different types. Tuples are constructed
-using parentheses `()`, and each tuple itself is a value with type signature
-`(T1, T2, ...)`, where `T1`, `T2` are the types of its members. Functions can
-use tuples to return multiple values, as tuples can hold any number of values.
+Una tupla es una colección de valores de diferentes tipos. Las tuplas se
+construyen usando paréntesis `()`, y cada tupla en sí es un valor con firma de
+tipo `(T1, T2, ...)`, donde `T1`,`T2` son los tipos de sus miembros. Las
+funciones pueden usar tuplas para devolver múltiples valores, ya que las tuplas
+pueden contener cualquier número de valores.
 
 ```rust,editable
-// Tuples can be used as function arguments and as return values
-fn reverse(pair: (i32, bool)) -> (bool, i32) {
-    // `let` can be used to bind the members of a tuple to variables
-    let (integer, boolean) = pair;
+// Las tuplas se pueden utilizar como argumentos de función y como valores de retorno
+fn invertir(par: (i32, bool)) -> (bool, i32) {
+    // `let` se puede usar para vincular los miembros de una tupla a variables
+    let (entero, booleano) = par;
 
-    (boolean, integer)
+    (booleano, entero)
 }
 
-// The following struct is for the activity.
+// La siguiente estructura es para la actividad.
 #[derive(Debug)]
-struct Matrix(f32, f32, f32, f32);
+struct Matriz(f32, f32, f32, f32);
 
 fn main() {
-    // A tuple with a bunch of different types
-    let long_tuple = (1u8, 2u16, 3u32, 4u64,
-                      -1i8, -2i16, -3i32, -4i64,
-                      0.1f32, 0.2f64,
-                      'a', true);
+    // Una tupla con muchos tipos diferentes.
+    let tupla_larga = (1u8, 2u16, 3u32, 4u64,
+                       -1i8, -2i16, -3i32, -4i64,
+                       0.1f32, 0.2f64,
+                       'a', true);
 
-    // Values can be extracted from the tuple using tuple indexing
-    println!("long tuple first value: {}", long_tuple.0);
-    println!("long tuple second value: {}", long_tuple.1);
+    // Los valores se pueden extraer de la tupla mediante la indexación de
+    // tuplas
+    println!("el primer valor de la tupla: {}", tupla_larga.0);
+    println!("el segundo valor de la tuple: {}", tupla_larga.1);
 
-    // Tuples can be tuple members
-    let tuple_of_tuples = ((1u8, 2u16, 2u32), (4u64, -1i8), -2i16);
+    // Tuplas pueden ser miembros de tuplas
+    let tupla_de_tuplas = ((1u8, 2u16, 2u32), (4u64, -1i8), -2i16);
 
-    // Tuples are printable
-    println!("tuple of tuples: {:?}", tuple_of_tuples);
+    // Las tuplas son imprimibles
+    println!("tupla de tuplas: {:?}", tupla_de_tuplas);
     
-    // But long Tuples cannot be printed
-    // let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
-    // println!("too long tuple: {:?}", too_long_tuple);
-    // TODO ^ Uncomment the above 2 lines to see the compiler error
+    // Pero no se pueden imprimir tuplas largas 
+    // let tupla_muy_larga = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+    // println!("tupla muy larga: {:?}", tupla_muy_larga);
+    // TODO ^ Descomenta las 2 líneas anteriores para ver el error del
+    // compilador
 
-    let pair = (1, true);
-    println!("pair is {:?}", pair);
+    let par = (1, true);
+    println!("par is {:?}", par);
 
-    println!("the reversed pair is {:?}", reverse(pair));
+    println!("el par invertido es {:?}", invertir(par));
 
-    // To create one element tuples, the comma is required to tell them apart
-    // from a literal surrounded by parentheses
-    println!("one element tuple: {:?}", (5u32,));
-    println!("just an integer: {:?}", (5u32));
+    // Para crear tuplas de un elemento, se requiere la coma para
+    // diferenciarlas de un literal entre paréntesis
+    println!("tupla de un elemento: {:?}", (5u32,));
+    println!("solo un número entero: {:?}", (5u32));
 
-    //tuples can be destructured to create bindings
-    let tuple = (1, "hello", 4.5, true);
+    // las tuplas se pueden desestructurar para crear enlaces
+    let tupla = (1, "hola", 4.5, true);
 
-    let (a, b, c, d) = tuple;
+    let (a, b, c, d) = tupla;
     println!("{:?}, {:?}, {:?}, {:?}", a, b, c, d);
 
-    let matrix = Matrix(1.1, 1.2, 2.1, 2.2);
-    println!("{:?}", matrix);
+    let matriz = Matriz(1.1, 1.2, 2.1, 2.2);
+    println!("{:?}", matriz);
 
 }
 ```
 
-### Activity
+### Actividad
 
- 1. *Recap*: Add the `fmt::Display` trait to the Matrix `struct` in the above example,
-    so that if you switch from printing the debug format `{:?}` to the display
-    format `{}`, you see the following output:
+ 1. *Recapitulación*: Agrega el rasgo `fmt::Display` a la estructura `struct`
+    Matriz en el ejemplo anterior, de modo que si cambias de imprimir el
+    formato de depuración `{:?}` al formato de visualización `{}`, verás la
+    siguiente salida:
 
     ```text
     ( 1.1 1.2 )
     ( 2.1 2.2 )
     ```
+    
+    Es posible que desees volver al ejemplo de [impresión para
+    mostrar][print_display]
 
-    You may want to refer back to the example for [print display][print_display].
- 2. Add a `transpose` function using the `reverse` function as a template, which
-    accepts a matrix as an argument, and returns a matrix in which two elements
-    have been swapped. For example:
+ 2. Agrega una función `transponer` usando la función `invertir` como
+    plantilla, que acepta una matriz como argumento y devuelve una matriz en la
+    que se han intercambiado dos elementos. Por ejemplo:
+
 
     ```rust,ignore
-    println!("Matrix:\n{}", matrix);
-    println!("Transpose:\n{}", transpose(matrix));
+    println!("Matriz:\n{}", matriz);
+    println!("Transponer:\n{}", transponer(matriz));
     ```
 
-    results in the output:
+    resulta en la salida:
 
     ```text
-    Matrix:
+    Matriz:
     ( 1.1 1.2 )
     ( 2.1 2.2 )
-    Transpose:
+    Transponer:
     ( 1.1 2.1 )
     ( 1.2 2.2 )
     ```

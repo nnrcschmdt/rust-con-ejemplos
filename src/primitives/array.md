@@ -1,54 +1,56 @@
-# Arrays and Slices
+# Vectores y segmentos
 
-An array is a collection of objects of the same type `T`, stored in contiguous
-memory. Arrays are created using brackets `[]`, and their length, which is known
-at compile time, is part of their type signature `[T; length]`.
+Un vector es una colección de objetos del mismo tipo `T`, almacenados en una
+memoria contigua. Los vectores se crean usando corchetes `[]`, y su longitud,
+que se conoce en tiempo de compilación, es parte de su firma de tipo
+`[T; longitud]`.
 
-Slices are similar to arrays, but their length is not known at compile time.
-Instead, a slice is a two-word object, the first word is a pointer to the data,
-and the second word is the length of the slice. The word size is the same as 
-usize, determined by the processor architecture eg 64 bits on an x86-64. 
-Slices can be used to borrow a section of an array, and have the type signature 
-`&[T]`.
+Los segmentos son similares a las matrices, pero su longitud no se conoce en el
+momento de la compilación. En cambio, un segmento es un objeto de dos palabras,
+la primera palabra es un puntero a los datos y la segunda palabra es la
+longitud del segmento. El tamaño de la palabra es el mismo de usize,
+determinado por la arquitectura del procesador, por ejemplo, 64 bits en un
+x86-64. Los segmentos se pueden usar para tomar prestada una sección de un
+vector y tienen la firma de tipo `&[T]`.
 
 ```rust,editable,ignore,mdbook-runnable
 use std::mem;
 
-// This function borrows a slice
-fn analyze_slice(slice: &[i32]) {
-    println!("first element of the slice: {}", slice[0]);
-    println!("the slice has {} elements", slice.len());
+// Esta función toma prestado un segmento
+fn analiza_segmento(segmento: &[i32]) {
+    println!("primer elemento del segmento: {}", segmento[0]);
+    println!("el segmento tiene {} elementos", segmento.len());
 }
 
 fn main() {
-    // Fixed-size array (type signature is superfluous)
+    // Vector de tamaño fijo (la firma del tipo es superflua)
     let xs: [i32; 5] = [1, 2, 3, 4, 5];
 
-    // All elements can be initialized to the same value
+    // Todos los elementos se pueden inicializar con el mismo valor
     let ys: [i32; 500] = [0; 500];
 
-    // Indexing starts at 0
-    println!("first element of the array: {}", xs[0]);
-    println!("second element of the array: {}", xs[1]);
+    // La indexación comienza en 0
+    println!("primer elemento del vector: {}", xs[0]);
+    println!("segundo elemento del vector: {}", xs[1]);
 
-    // `len` returns the count of elements in the array
-    println!("number of elements in array: {}", xs.len());
+    // `len` devuelve el recuento de elementos en el vector 
+    println!("número de elementos en el vector: {}", xs.len());
 
-    // Arrays are stack allocated
-    println!("array occupies {} bytes", mem::size_of_val(&xs));
+    // Los vectores se asignan en la pila
+    println!("vector ocupa {} bytes", mem::size_of_val(&xs));
 
-    // Arrays can be automatically borrowed as slices
-    println!("borrow the whole array as a slice");
-    analyze_slice(&xs);
+    // Los vectores se pueden tomar prestadas automáticamente como segmentos 
+    println!("pidienedo prestado todo el vector como un segmento");
+    analiza_segmento(&xs);
 
-    // Slices can point to a section of an array
-    // They are of the form [starting_index..ending_index]
-    // starting_index is the first position in the slice
-    // ending_index is one more than the last position in the slice
-    println!("borrow a section of the array as a slice");
-    analyze_slice(&ys[1 .. 4]);
+    // Los segmentos pueden apuntar a una sección de un vector
+    // Tienen el formato [índice_inicial..índice_final]
+    // índice_inicial es la primera posición en el segmento
+    // índice_final es uno más que la última posición en el segmento
+    println!("pidienedo prestada una sección del vector como un segmento");
+    analiza_segmento(&ys[1 .. 4]);
 
-    // Out of bound indexing causes compile error
+    // La indexación fuera del límite provoca un error de compilación
     println!("{}", xs[5]);
 }
 ```
