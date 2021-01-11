@@ -13,6 +13,8 @@ ejemplos, no olvide [instalar Rust localmente][install] y consultar la
 ¡Ahora comencemos!
 
 - [Hola mundo](hello.md) - Comienza con un programa tradicional de hola mundo.
+- [Tipos elementales](primitives.md) - Aprende sobre enteros con signo, enteros
+  sin signo y otros tipos elementales.
 
 [rust]: https://www.rust-lang.org/es/
 [install]: https://www.rust-lang.org/es/tools/install
