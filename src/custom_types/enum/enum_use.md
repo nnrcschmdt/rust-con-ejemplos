@@ -1,50 +1,52 @@
-# use
+# uso
 
-The `use` declaration can be used so manual scoping isn't needed:
+La declaración `use` se puede usar para que no sea necesario el ámbito manual:
 
 ```rust,editable
-// An attribute to hide warnings for unused code.
+// Un atributo para ocultar advertencias de código no utilizado.
 #![allow(dead_code)]
 
-enum Status {
-    Rich,
-    Poor,
+enum Estatus {
+    Rico,
+    Pobre,
 }
 
-enum Work {
-    Civilian,
-    Soldier,
+enum Trabajo {
+    Civil,
+    Soldado,
 }
 
 fn main() {
-    // Explicitly `use` each name so they are available without
-    // manual scoping.
-    use crate::Status::{Poor, Rich};
-    // Automatically `use` each name inside `Work`.
-    use crate::Work::*;
+    // `use` explícitamente cada nombre para que estén disponibles sin ámbito
+    // manual.
+    use crate::Estatus::{Pobre, Rico};
+    // Automáticamente `use` cada nombre dentro de `Trabajo`.
+    use crate::Trabajo::*;
 
-    // Equivalent to `Status::Poor`.
-    let status = Poor;
-    // Equivalent to `Work::Civilian`.
-    let work = Civilian;
+    // Equivalente a `Estatus::Pobre`.
+    let estatus = Pobre;
+    // Equivalente a `Trabajo::Civil`.
+    let trabajo = Civil;
 
-    match status {
-        // Note the lack of scoping because of the explicit `use` above.
-        Rich => println!("The rich have lots of money!"),
-        Poor => println!("The poor have no money..."),
+    match estatus {
+        // Ten en cuenta la falta de ámbito debido al `use` explícito anterior.
+        Rico => println!("¡Los ricos tienen mucho dinero!"),
+        Pobre => println!("Los pobres no tienen dinero ..."),
     }
 
-    match work {
-        // Note again the lack of scoping.
-        Civilian => println!("Civilians work!"),
-        Soldier  => println!("Soldiers fight!"),
+    match trabajo {
+        // Ten en cuenta nuevamente la falta de ámbito.
+        Civil => println!("¡Los civiles trabajan!"),
+        Soldado  => println!("¡Los soldados luchan!"),
     }
 }
 ```
 
+<!--
 ### See also:
 
 [`match`][match] and [`use`][use] 
+-->
 
 [use]: ../../mod/use.md
 [match]: ../../flow_control/match.md

@@ -1,52 +1,56 @@
-# Testcase: linked-list
+# Caso de prueba: Lista enlazada
 
-A common use for `enums` is to create a linked-list:
+Un uso común de `enum`s es crear una lista enlazada:
 
 ```rust,editable
-use crate::List::*;
+use crate::Lista::*;
 
-enum List {
-    // Cons: Tuple struct that wraps an element and a pointer to the next node
-    Cons(u32, Box<List>),
-    // Nil: A node that signifies the end of the linked list
+enum Lista {
+    // Cons: Estructura de tupla que envuelve un elemento y un puntero al
+    // siguiente nodo
+    Cons(u32, Box<Lista>),
+    // Nil: Un nodo que significa el final de la lista enlazada 
     Nil,
 }
 
-// Methods can be attached to an enum
-impl List {
-    // Create an empty list
-    fn new() -> List {
-        // `Nil` has type `List`
+// Los métodos se pueden adjuntar a una enumeración
+impl Lista {
+    // Crea una lista vacía
+    fn new() -> Lista {
+        // `Nil` tiene el tipo `Lista`
         Nil
     }
 
-    // Consume a list, and return the same list with a new element at its front
-    fn prepend(self, elem: u32) -> List {
-        // `Cons` also has type List
+    // Consume una lista y devuelve la misma lista con un nuevo elemento al
+    // frente
+    fn prepend(self, elem: u32) -> Lista {
+        // `Cons` también tiene el tipo `Lista`
         Cons(elem, Box::new(self))
     }
 
-    // Return the length of the list
+    // Devuelve la longitud de la lista
     fn len(&self) -> u32 {
-        // `self` has to be matched, because the behavior of this method
-        // depends on the variant of `self`
-        // `self` has type `&List`, and `*self` has type `List`, matching on a
-        // concrete type `T` is preferred over a match on a reference `&T`
+        // `self` tiene que coincidir, porque el comportamiento de este método
+        // depende de la variante de `self`
+        // `self` tiene el tipo `&Lista` y `*self` tiene el tipo `Lista`, se
+        // prefiere la coincidencia con un tipo concreto `T` sobre una
+        // coincidencia con una referencia `&T`
         match *self {
-            // Can't take ownership of the tail, because `self` is borrowed;
-            // instead take a reference to the tail
+            // No se puede tomar posesión de la cola, porque se toma prestado
+            // `self`; en su lugar, se toma una referencia a la cola
             Cons(_, ref tail) => 1 + tail.len(),
-            // Base Case: An empty list has zero length
+            // Caso base: una lista vacía tiene una longitud cero
             Nil => 0
         }
     }
 
-    // Return representation of the list as a (heap allocated) string
+    // Devuelve la representación de la lista como una cadena (asignada al
+    // montículo)
     fn stringify(&self) -> String {
         match *self {
             Cons(head, ref tail) => {
-                // `format!` is similar to `print!`, but returns a heap
-                // allocated string instead of printing to the console
+                // `format!` es similar a `print!`, pero devuelve una cadena
+                // asignada al montículo en lugar de imprimir en la consola
                 format!("{}, {}", head, tail.stringify())
             },
             Nil => {
@@ -57,23 +61,25 @@ impl List {
 }
 
 fn main() {
-    // Create an empty linked list
-    let mut list = List::new();
+    // Crear una lista vinculada vacía
+    let mut lista = Lista::new();
 
-    // Prepend some elements
-    list = list.prepend(1);
-    list = list.prepend(2);
-    list = list.prepend(3);
+    // Anteponer algunos elementos
+    lista = lista.prepend(1);
+    lista = lista.prepend(2);
+    lista = lista.prepend(3);
 
-    // Show the final state of the list
-    println!("linked list has length: {}", list.len());
-    println!("{}", list.stringify());
+    // Mostrar el estado final de la lista.
+    println!("la lista enlazada tiene longitud: {}", lista.len());
+    println!("{}", lista.stringify());
 }
 ```
 
+<!--
 ### See also:
 
 [`Box`][box] and [methods][methods]
+-->
 
 [box]: ../../std/box.md
 [methods]: ../../fn/methods.md
