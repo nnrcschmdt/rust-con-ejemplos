@@ -1,46 +1,51 @@
-# Scope and Shadowing
+# Ámbito y sombreado
 
-Variable bindings have a scope, and are constrained to live in a *block*. A
-block is a collection of statements enclosed by braces `{}`. 
+Los enlaces de variables tienen un ámbito y están limitados a vivir en un
+*bloque*. Un bloque es una colección de declaraciones encerradas entre corchetes
+`{}`.
+
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    // This binding lives in the main function
-    let long_lived_binding = 1;
+    // Este enlace vive en la función principal
+    let enlace_de_vida_larga = 1;
 
-    // This is a block, and has a smaller scope than the main function
+    // Este es un bloque y tiene un ámbito más pequeño que la función principal
     {
-        // This binding only exists in this block
-        let short_lived_binding = 2;
+        // Este enlace solo existe en este bloque
+        let enlace_de_vida_corta = 2;
 
-        println!("inner short: {}", short_lived_binding);
+        println!("Bloque interior, vida corta: {}", enlace_de_vida_corta);
     }
-    // End of the block
+    // Fin del bloque
 
-    // Error! `short_lived_binding` doesn't exist in this scope
-    println!("outer short: {}", short_lived_binding);
-    // FIXME ^ Comment out this line
+    // ¡Error! `enlace_de_vida_corta` no existe en este ámbito
+    println!("Exterior del bloque, vida corta: {}", enlace_de_vida_corta);
+    // FIXME ^ Comenta esta línea
 
-    println!("outer long: {}", long_lived_binding);
+    println!("Exterior del bloque, vida larga: {}", enlace_de_vida_larga);
 }
 ```
-Also, [variable shadowing][variable-shadow] is allowed.
+
+Además, se permite [sombreado de variables][variable-shadow].
+
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    let shadowed_binding = 1;
+    let enlace_sombreado = 1;
 
     {
-        println!("before being shadowed: {}", shadowed_binding);
+        println!("antes de ser sombreado: {}", enlace_sombreado);
 
-        // This binding *shadows* the outer one
-        let shadowed_binding = "abc";
+        // Este enlace *sombrea* al exterior
+        let enlace_sombreado = "abc";
 
-        println!("shadowed in inner block: {}", shadowed_binding);
+        println!("sombreado en bloque interior: {}", enlace_sombreado);
     }
-    println!("outside inner block: {}", shadowed_binding);
+    println!("fuera del bloque interior: {}", enlace_sombreado);
 
-    // This binding *shadows* the previous binding
-    let shadowed_binding = 2;
-    println!("shadowed in outer block: {}", shadowed_binding);
+    // Este enlace *sombrea* al anterior
+    let enlace_sombreado = 2;
+    println!("sombreado en el bloque exterior: {}", enlace_sombreado);
 }
 ```
+
 [variable-shadow]: https://en.wikipedia.org/wiki/Variable_shadowing

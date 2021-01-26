@@ -1,34 +1,34 @@
-# Declare first
+# Declaración anticipada
 
-It's possible to declare variable bindings first, and initialize them later.
-However, this form is seldom used, as it may lead to the use of uninitialized
-variables.
+Es posible declarar enlaces de variables primero e inicializarlos más tarde.
+Sin embargo, esta forma se usa raras veces, ya que puede dar lugar al uso de
+variables no inicializadas.
 
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    // Declare a variable binding
-    let a_binding;
+    // Declarar un enlace variable
+    let un_enlace;
 
     {
         let x = 2;
 
-        // Initialize the binding
-        a_binding = x * x;
+        // Inicializar el enlace
+        un_enlace = x * x;
     }
 
-    println!("a binding: {}", a_binding);
+    println!("un enlace: {}", un_enlace);
 
-    let another_binding;
+    let otro_enlace;
 
-    // Error! Use of uninitialized binding
-    println!("another binding: {}", another_binding);
-    // FIXME ^ Comment out this line
+    // ¡Error! Uso de enlace no inicializado
+    println!("otro enlace: {}", otro_enlace);
+    // FIXME ^ Comenta esta línea
 
-    another_binding = 1;
+    otro_enlace = 1;
 
-    println!("another binding: {}", another_binding);
+    println!("otro enlace: {}", otro_enlace);
 }
 ```
 
-The compiler forbids use of uninitialized variables, as this would lead to
-undefined behavior.
+El compilador prohíbe el uso de variables no inicializadas, ya que esto
+conduciría a un comportamiento indefinido.

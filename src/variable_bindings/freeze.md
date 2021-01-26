@@ -1,24 +1,25 @@
-# Freezing
+# Congelación
 
-When data is bound by the same name immutably, it also *freezes*. *Frozen* data can't be 
-modified until the immutable binding goes out of scope:
+Cuando los datos están enlazados por el mismo nombre de manera inmutable,
+también *se congelan*. Los datos *congelados* no se pueden modificar hasta que el
+enlace inmutable se salga del ámbito:
 
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    let mut _mutable_integer = 7i32;
+    let mut _entero_mutable = 7i32;
 
     {
-        // Shadowing by immutable `_mutable_integer`
-        let _mutable_integer = _mutable_integer;
+        // Sombreado por inmutable `_entero_mutable`
+        let _entero_mutable = _entero_mutable;
 
-        // Error! `_mutable_integer` is frozen in this scope
-        _mutable_integer = 50;
-        // FIXME ^ Comment out this line
+        // ¡Error! `_entero_mutable` está congelado en este ámbito
+        _entero_mutable = 50;
+        // FIXME ^ Comenta esta línea
 
-        // `_mutable_integer` goes out of scope
+        // `_entero_mutable` sale de ámbito
     }
 
-    // Ok! `_mutable_integer` is not frozen in this scope
-    _mutable_integer = 3;
+    // ¡Ok! `_entero_mutable` no está congelado en este ámbito
+    _entero_mutable = 3;
 }
 ```

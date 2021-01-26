@@ -23,3 +23,8 @@
         - [Caso de prueba: Lista enlazada](custom_types/enum/testcase_linked_list.md)
     - [Constantes](custom_types/constants.md)
 
+- [Enlace de variables](variable_bindings.md)
+    - [Mutabilidad](variable_bindings/mut.md)
+    - [Ámbito y sombreado](variable_bindings/scope.md)
+    - [Declaración anticipada](variable_bindings/declare.md)
+    - [Congelación](variable_bindings/freeze.md)

@@ -1,24 +1,24 @@
-# Mutability
+# Mutabilidad
 
-Variable bindings are immutable by default, but this can be overridden using
-the `mut` modifier.
+Los enlaces de variables son inmutables por defecto, pero esto se puede anular
+usando el modificador `mut`.
 
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    let _immutable_binding = 1;
-    let mut mutable_binding = 1;
+    let _enlace_inmutable = 1;
+    let mut enlace_mutable = 1;
 
-    println!("Before mutation: {}", mutable_binding);
+    println!("Antes de la mutación: {}", enlace_mutable);
 
     // Ok
-    mutable_binding += 1;
+    enlace_mutable += 1;
 
-    println!("After mutation: {}", mutable_binding);
+    println!("Después de la mutation: {}", enlace_mutable);
 
     // Error!
-    _immutable_binding += 1;
-    // FIXME ^ Comment out this line
+    _enlace_inmutable += 1;
+    // FIXME ^ Comenta esta línea
 }
 ```
 
-The compiler will throw a detailed diagnostic about mutability errors.
+El compilador arrojará un diagnóstico detallado sobre errores de mutabilidad.
