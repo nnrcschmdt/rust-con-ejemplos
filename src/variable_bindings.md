@@ -1,30 +1,32 @@
-# Variable Bindings
+# Enlace de variables
 
-Rust provides type safety via static typing. Variable bindings can be type
-annotated when declared. However, in most cases, the compiler will be able
-to infer the type of the variable from the context, heavily reducing the
-annotation burden.
+Rust proporciona seguridad de tipo mediante escritura estática. Los enlaces de
+variables se pueden anotar cuando se declaran. Sin embargo, en la mayoría de
+los casos, el compilador podrá inferir el tipo de variable del contexto,
+reduciendo considerablemente la carga de anotaciones.
 
-Values (like literals) can be bound to variables, using the `let` binding.
+Los valores (como los literales) se pueden vincular a variables, utilizando el
+vínculo `let`.
 
 ```rust,editable
 fn main() {
-    let an_integer = 1u32;
-    let a_boolean = true;
-    let unit = ();
+    let un_entero = 1u32;
+    let un_booleano = true;
+    let unidad = ();
 
-    // copy `an_integer` into `copied_integer`
-    let copied_integer = an_integer;
+    // copiar `un_entero` en `entero_copiado`
+    let entero_copiado = un_entero;
 
-    println!("An integer: {:?}", copied_integer);
-    println!("A boolean: {:?}", a_boolean);
-    println!("Meet the unit value: {:?}", unit);
+    println!("Un número entero: {:?}", entero_copiado);
+    println!("Un booleano: {:?}", un_booleano);
+    println!("Conoce el valor unitario: {:?}", unidad);
 
-    // The compiler warns about unused variable bindings; these warnings can
-    // be silenced by prefixing the variable name with an underscore
-    let _unused_variable = 3u32;
+    // El compilador advierte sobre los enlaces de variables no utilizados;
+    // estas advertencias pueden ser silenciado prefijando el nombre de la
+    // variable con un guión bajo
+    let _variable_sin_usar = 3u32;
 
-    let noisy_unused_variable = 2u32;
-    // FIXME ^ Prefix with an underscore to suppress the warning
+    let variable_ruidosa_sin_usar = 2u32;
+    // FIXME ^ Prefija con un guión bajo para suprimir la advertencia
 }
 ```
