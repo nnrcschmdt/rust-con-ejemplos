@@ -28,3 +28,9 @@
     - [Ámbito y sombreado](variable_bindings/scope.md)
     - [Declaración anticipada](variable_bindings/declare.md)
     - [Congelación](variable_bindings/freeze.md)
+
+- [Tipos](types.md)
+    - [Casting](types/cast.md)
+    - [Literales](types/literals.md)
+    - [Inferencia](types/inference.md)
+    - [Aliasing](types/alias.md)

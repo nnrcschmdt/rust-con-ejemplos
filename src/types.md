@@ -1,13 +1,14 @@
-# Types
+# Tipos
 
-Rust provides several mechanisms to change or define the type of primitive and
-user defined types. The following sections cover:
-* [Casting] between primitive types
-* Specifying the desired type of [literals]
-* Using [type inference]
-* [Aliasing] types
+Rust proporciona varios mecanismos para cambiar o definir el tipo de tipos
+elementales y definidos por el usuario. Las siguientes secciones cubren:
 
-[Casting]: types/cast.md
-[literals]: types/literals.md
-[type inference]: types/inference.md
+* [Conversión explícita] entre tipos elementales 
+* Especificar el tipo deseado de [literales]
+* Usar [inferencia de tipo]
+* [Aliasing] tipos
+
+[Conversión explícita]: types/cast.md
+[literales]: types/literals.md
+[inferencia de tipo]: types/inference.md
 [Aliasing]: types/alias.md

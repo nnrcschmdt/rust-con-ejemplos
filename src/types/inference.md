@@ -1,28 +1,28 @@
-# Inference
+# Inferencia
 
-The type inference engine is pretty smart. It does more than looking at the
-type of the value expression
-during an initialization. It also looks at how the variable is used afterwards 
-to infer its type. Here's an advanced example of type inference:
+El motor de inferencia de tipos es bastante inteligente. Hace más que mirar el
+tipo de expresión de valor durante una inicialización. También analiza cómo se
+usa la variable posteriormente para inferir su tipo. Aquí hay un ejemplo
+avanzado de inferencia de tipos:
 
 ```rust,editable
 fn main() {
-    // Because of the annotation, the compiler knows that `elem` has type u8.
+    // Debido a la anotación, el compilador sabe que `elem` tiene el tipo u8.
     let elem = 5u8;
 
-    // Create an empty vector (a growable array).
+    // Crea un vector vacío (un vector ampliable).
     let mut vec = Vec::new();
-    // At this point the compiler doesn't know the exact type of `vec`, it
-    // just knows that it's a vector of something (`Vec<_>`).
+    // En este punto, el compilador no conoce el tipo exacto de `vec`,
+    // simplemente sabe que es un vector de algo (`Vec<_>`).
 
-    // Insert `elem` in the vector.
+    // Inserta `elem` en el vector.
     vec.push(elem);
-    // Aha! Now the compiler knows that `vec` is a vector of `u8`s (`Vec<u8>`)
-    // TODO ^ Try commenting out the `vec.push(elem)` line
+    // ¡Ajá! Ahora el compilador sabe que `vec` es un vector de `u8`s (`Vec<u8>`)
+    // TODO ^ Intenta comentar la línea `vec.push(elem)`
 
     println!("{:?}", vec);
 }
 ```
 
-No type annotation of variables was needed, the compiler is happy and so is the
-programmer!
+No se necesitó ninguna anotación de tipo de variables, ¡el compilador está
+contento y también el programador!

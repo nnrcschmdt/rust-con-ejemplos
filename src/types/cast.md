@@ -1,83 +1,90 @@
-# Casting
+# Conversión explícita
 
-Rust provides no implicit type conversion (coercion) between primitive types.
-But, explicit type conversion (casting) can be performed using the `as` keyword.
+Rust no proporciona conversión de tipo implícita (coerción) entre tipos
+elementales. Pero, la conversión de tipo explícita (*casting*) se puede realizar
+usando la palabra clave `as`.
 
-Rules for converting between integral types follow C conventions generally,
-except in cases where C has undefined behavior. The behavior of all casts
-between integral types is well defined in Rust.
+Las reglas para convertir entre tipos integrales siguen las convenciones de C
+en general, excepto en los casos en que C tiene un comportamiento indefinido.
+El comportamiento de todas las conversiones explícitas entre tipos integrales
+está bien definido en Rust.
 
 ```rust,editable,ignore,mdbook-runnable
-// Suppress all warnings from casts which overflow.
+// Suprime todas las advertencias de las conversiones que se desbordan.
 #![allow(overflowing_literals)]
 
 fn main() {
     let decimal = 65.4321_f32;
 
-    // Error! No implicit conversion
-    let integer: u8 = decimal;
-    // FIXME ^ Comment out this line
+    // ¡Error! Sin conversión implícita
+    let entero: u8 = decimal;
+    // FIXME ^ Comenta esta línea
 
-    // Explicit conversion
-    let integer = decimal as u8;
-    let character = integer as char;
+    // Conversión explícita
+    let entero = decimal as u8;
+    let caracter = entero as char;
 
-    // Error! There are limitations in conversion rules. A float cannot be directly converted to a char.
-    let character = decimal as char;
-    // FIXME ^ Comment out this line
+    // ¡Error! Existen limitaciones en las reglas de conversión. Un número de
+    // coma flotate no se puede convertir directamente en un char.
+    let caracter = decimal as char;
+    // FIXME ^ Comenta esta línea
 
-    println!("Casting: {} -> {} -> {}", decimal, integer, character);
+    println!("Convirtiendo: {} -> {} -> {}", decimal, entero, caracter);
 
-    // when casting any value to an unsigned type, T,
-    // T::MAX + 1 is added or subtracted until the value
-    // fits into the new type
+    // al convertir cualquier valor a un tipo sin signo, T, T::MAX + 1 se suma
+    // o resta hasta que el valor encaje en el nuevo tipo
 
-    // 1000 already fits in a u16
-    println!("1000 as a u16 is: {}", 1000 as u16);
+    // 1000 ya encaja en un u16
+    println!("1000 como un u16 es: {}", 1000 as u16);
 
     // 1000 - 256 - 256 - 256 = 232
-    // Under the hood, the first 8 least significant bits (LSB) are kept,
-    // while the rest towards the most significant bit (MSB) get truncated.
-    println!("1000 as a u8 is : {}", 1000 as u8);
+    // Por debajo, se guardan los primeros 8 bits menos significativos (LSB),
+    // mientras que el resto hacia el bit más significativo (MSB) se trunca.
+    println!("1000 como un u8 es : {}", 1000 as u8);
     // -1 + 256 = 255
-    println!("  -1 as a u8 is : {}", (-1i8) as u8);
+    println!("  -1 como un u8 es : {}", (-1i8) as u8);
 
-    // For positive numbers, this is the same as the modulus
-    println!("1000 mod 256 is : {}", 1000 % 256);
+    // Para números positivos, esto es lo mismo que el módulo
+    println!("1000 módulo 256 es : {}", 1000 % 256);
 
-    // When casting to a signed type, the (bitwise) result is the same as
-    // first casting to the corresponding unsigned type. If the most significant
-    // bit of that value is 1, then the value is negative.
+    // Al convertir a un tipo con signo, el resultado (bit a bit) es el mismo
+    // que al convertir primero al tipo sin signo correspondiente. Si el bit
+    // más significativo de ese valor es 1, entonces el valor es negativo.
 
-    // Unless it already fits, of course.
-    println!(" 128 as a i16 is: {}", 128 as i16);
-    // 128 as u8 -> 128, whose two's complement in eight bits is:
-    println!(" 128 as a i8 is : {}", 128 as i8);
+    // A menos que ya encaje, por supuesto.
+    println!(" 128 como un i16 es: {}", 128 as i16);
+    // 128 as u8 -> 128, cuyo complemento de dos en ocho bits es:
+    println!(" 128 como un i8 es : {}", 128 as i8);
 
-    // repeating the example above
+    // repitiendo el ejemplo anterior
     // 1000 as u8 -> 232
-    println!("1000 as a u8 is : {}", 1000 as u8);
-    // and the two's complement of 232 is -24
-    println!(" 232 as a i8 is : {}", 232 as i8);
+    println!("1000 como un u8 es : {}", 1000 as u8);
+    // y el complemento de dos de 232 es -24
+    println!(" 232 como un i8 es : {}", 232 as i8);
     
-    // Since Rust 1.45, the `as` keyword performs a *saturating cast* when casting from float to int.  
-    // If the floating point value exceeds the upper bound or is less than the lower bound, the returned value will be equal to the bound crossed.
+    // Desde Rust 1.45, la palabra clave `as` realiza una *conversión saturante*
+    // cuando se convierte de coma flotante a entero.
+    // Si el valor de la coma flotante excede el límite superior o es menor que
+    // el límite inferior, el valor devuelto será igual al límite cruzado.
     
-    // 300.0 is 255
-    println!("300.0 is {}", 300.0_f32 as u8);
-    // -100.0 as u8 is 0
-    println!("-100.0 as u8 is {}", -100.0_f32 as u8);
-    // nan as u8 is 0
-    println!("nan as u8 is {}", f32::NAN as u8);
+    // 300.0 es 255
+    println!("300.0 es {}", 300.0_f32 as u8);
+    // -100.0 as u8 es 0
+    println!("-100.0 como u8 es {}", -100.0_f32 as u8);
+    // nan as u8 es 0
+    println!("nan como u8 es {}", f32::NAN as u8);
     
-    // This behavior incures a small runtime cost and can be avoided with unsafe methods, however the results might overflow and return **unsound values**. Use these methods wisely:
+    // Este comportamiento incurre en un pequeño costo de tiempo de ejecución y
+    // se puede evitar con métodos inseguros; sin embargo, los resultados
+    // pueden desbordarse y devolver **valores incorrectos**. Utiliza estos
+    // métodos con prudencia:
     unsafe {
-        // 300.0 is 44
-        println!("300.0 is {}", 300.0_f32.to_int_unchecked::<u8>());
-        // -100.0 as u8 is 156
-        println!("-100.0 as u8 is {}", (-100.0_f32).to_int_unchecked::<u8>());
-        // nan as u8 is 0
-        println!("nan as u8 is {}", f32::NAN.to_int_unchecked::<u8>());
+        // 300.0 es 44
+        println!("300.0 es {}", 300.0_f32.to_int_unchecked::<u8>());
+        // -100.0 as u8 es 156
+        println!("-100.0 como u8 es {}", (-100.0_f32).to_int_unchecked::<u8>());
+        // nan as u8 es 0
+        println!("nan como u8 es {}", f32::NAN.to_int_unchecked::<u8>());
     }
 }
 ```

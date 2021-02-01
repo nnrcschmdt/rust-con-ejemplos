@@ -1,36 +1,39 @@
 # Aliasing
 
-The `type` statement can be used to give a new name to an existing type. Types
-must have `UpperCamelCase` names, or the compiler will raise a warning. The
-exception to this rule are the primitive types: `usize`, `f32`, etc.
+La instrucción `type` puede usarse para dar un nuevo nombre a un tipo
+existente. Los tipos deben tener nombres `UpperCamelCase`, o el compilador
+generará una advertencia. La excepción a esta regla son los tipos elementales:
+`usize`, `f32`, etc.
 
 ```rust,editable
-// `NanoSecond` is a new name for `u64`.
-type NanoSecond = u64;
-type Inch = u64;
+// `NanoSegundo` es un nuevo nombre para `u64`.
+type NanoSegundo = u64;
+type Pulgada = u64;
 
-// Use an attribute to silence warning.
+// Utiliza un atributo para silenciar la advertencia.
 #[allow(non_camel_case_types)]
 type u64_t = u64;
-// TODO ^ Try removing the attribute
+// TODO ^ Intenta eliminar el atributo
 
 fn main() {
-    // `NanoSecond` = `Inch` = `u64_t` = `u64`.
-    let nanoseconds: NanoSecond = 5 as u64_t;
-    let inches: Inch = 2 as u64_t;
+    // `NanoSegundo` = `Pulgada` = `u64_t` = `u64`.
+    let nanosegundos: NanoSegundo = 5 as u64_t;
+    let pulgadas: Pulgada = 2 as u64_t;
 
-    // Note that type aliases *don't* provide any extra type safety, because
-    // aliases are *not* new types
-    println!("{} nanoseconds + {} inches = {} unit?",
-             nanoseconds,
-             inches,
-             nanoseconds + inches);
+    // Ten en cuenta que los alias de tipo *no* proporcionan ninguna seguridad
+    // de tipo adicional, porque los alias *no* son tipos nuevos
+    println!("{} nanosegundos + {} pulgadas = {} unidad?",
+             nanosegundos,
+             pulgadas,
+             nanosegundos + pulgadas);
 }
 ```
 
-The main use of aliases is to reduce boilerplate; for example the `IoResult<T>` type
-is an alias for the `Result<T, IoError>` type.
+El uso principal de los alias es reducir el texto repetitivo; por ejemplo, el
+tipo `IoResult <T>` es un alias para el tipo `Result <T, IoError>`.
 
+<!--
 ### See also:
 
 [Attributes](../attribute.md)
+-->
