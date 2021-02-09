@@ -1,14 +1,15 @@
-# Conversion
+# Conversión
 
-Primitive types can be converted to each other through [casting].
+Los tipos elementales se pueden convertir entre sí mediante [conversión
+explícita].
 
-Rust addresses conversion between custom types (i.e., `struct` and `enum`)
-by the use of [traits]. The generic
-conversions will use the [`From`] and [`Into`] traits. However there are more
-specific ones for the more common cases, in particular when converting to and
-from `String`s.
+Rust aborda la conversión entre tipos personalizados (es decir, `struct` y
+`enum`) mediante el uso de <!--[rasgos]--> rasgos. Las conversiones genéricas
+usarán los rasgos [`From`] y [`Into`]. Sin embargo, hay otros más específicos
+para los casos más comunes, en particular cuando se convierte desde y hacia
+`String`s.
 
-[casting]: types/cast.md
-[traits]: trait.md
+[conversión explícita]: types/cast.md
+[rasgos]: trait.md
 [`From`]: https://doc.rust-lang.org/std/convert/trait.From.html
 [`Into`]: https://doc.rust-lang.org/std/convert/trait.Into.html

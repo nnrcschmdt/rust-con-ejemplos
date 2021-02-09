@@ -1,74 +1,76 @@
-# `From` and `Into`
+# `From` e `Into`
 
-The [`From`] and [`Into`] traits are inherently linked, and this is actually part of
-its implementation. If you are able to convert type A from type B, then it
-should be easy to believe that we should be able to convert type B to type A.
+Los rasgos [`From`] y [`Into`] están intrínsecamente vinculados, y esto es en
+realidad parte de su implementación. Si puedes convertir el tipo A del tipo B,
+entonces debería ser fácil creer que deberíamos poder convertir el tipo B en el
+tipo A.
 
 ## `From`
 
-The [`From`] trait allows for a type to define how to create itself from another
-type, hence providing a very simple mechanism for converting between several
-types. There are numerous implementations of this trait within the standard
-library for conversion of primitive and common types.
+El rasgo [`From`] permite que un tipo defina cómo crearse a sí mismo a partir
+de otro tipo, por lo que proporciona un mecanismo muy simple para convertir
+entre varios tipos. Existen numerosas implementaciones de este rasgo dentro de
+la biblioteca estándar para la conversión de tipos elementales y comunes.
 
-For example we can easily convert a `str` into a `String`
+Por ejemplo, podemos convertir fácilmente un `str` en un `String`
 
 ```rust
-let my_str = "hello";
-let my_string = String::from(my_str);
+let mi_str = "hola";
+let mi_string = String::from(mi_str);
 ```
 
-We can do similar for defining a conversion for our own type.
+Podemos hacer algo similar para definir una conversión para nuestro propio tipo.
 
 ```rust,editable
 use std::convert::From;
 
 #[derive(Debug)]
-struct Number {
-    value: i32,
+struct Numero {
+    valor: i32,
 }
 
-impl From<i32> for Number {
+impl From<i32> for Numero {
     fn from(item: i32) -> Self {
-        Number { value: item }
+        Numero { valor: item }
     }
 }
 
 fn main() {
-    let num = Number::from(30);
-    println!("My number is {:?}", num);
+    let num = Numero::from(30);
+    println!("Mi número es {:?}", num);
 }
 ```
 
 ## `Into`
 
-The [`Into`] trait is simply the reciprocal of the `From` trait. That is, if you
-have implemented the `From` trait for your type, `Into` will call it when
-necessary.
+El rasgo [`Into`] es simplemente el recíproco del rasgo `From`. Es decir, si
+has implementado el rasgo `From` para tu tipo, `Into` lo llamará cuando sea
+necesario.
 
-Using the `Into` trait will typically require specification of the type to
-convert into as the compiler is unable to determine this most of the time.
-However this is a small trade-off considering we get the functionality for free.
+El uso del rasgo `Into` normalmente requerirá la especificación del tipo a
+convertir, ya que el compilador no puede determinarlo la mayor parte del
+tiempo.  Sin embargo, esta es una pequeña compensación considerando que
+obtenemos la funcionalidad de forma gratuita.
 
 ```rust,editable
 use std::convert::From;
 
 #[derive(Debug)]
-struct Number {
-    value: i32,
+struct Numero {
+    valor: i32,
 }
 
-impl From<i32> for Number {
+impl From<i32> for Numero {
     fn from(item: i32) -> Self {
-        Number { value: item }
+        Numero { valor: item }
     }
 }
 
 fn main() {
-    let int = 5;
-    // Try removing the type declaration
-    let num: Number = int.into();
-    println!("My number is {:?}", num);
+    let entero = 5;
+    // Intenta eliminar la declaración de tipo
+    let numero: Numero = entero.into();
+    println!("Mi numero es {:?}", numero);
 }
 ```
 

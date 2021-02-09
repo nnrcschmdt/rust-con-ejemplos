@@ -1,9 +1,9 @@
-# `TryFrom` and `TryInto`
+# `TryFrom` y `TryInto`
 
-Similar to [`From` and `Into`][from-into], [`TryFrom`] and [`TryInto`] are
-generic traits for converting between types. Unlike `From`/`Into`, the
-`TryFrom`/`TryInto` traits are used for fallible conversions, and as such,
-return [`Result`]s.
+Similar a [`From` e `Into`][from-into], [`TryFrom`] y [`TryInto`] son rasgos
+genéricos para convertir entre tipos. A diferencia de `From`/`Into`, los rasgos
+`TryFrom`/`TryInto` se utilizan para conversiones falibles y, como tales,
+devuelven [`Result`]s.
 
 [from-into]: from_into.html
 [`TryFrom`]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
@@ -15,14 +15,14 @@ use std::convert::TryFrom;
 use std::convert::TryInto;
 
 #[derive(Debug, PartialEq)]
-struct EvenNumber(i32);
+struct NumeroPar(i32);
 
-impl TryFrom<i32> for EvenNumber {
+impl TryFrom<i32> for NumeroPar {
     type Error = ();
 
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         if value % 2 == 0 {
-            Ok(EvenNumber(value))
+            Ok(NumeroPar(value))
         } else {
             Err(())
         }
@@ -32,14 +32,14 @@ impl TryFrom<i32> for EvenNumber {
 fn main() {
     // TryFrom
 
-    assert_eq!(EvenNumber::try_from(8), Ok(EvenNumber(8)));
-    assert_eq!(EvenNumber::try_from(5), Err(()));
+    assert_eq!(NumeroPar::try_from(8), Ok(NumeroPar(8)));
+    assert_eq!(NumeroPar::try_from(5), Err(()));
 
     // TryInto
 
-    let result: Result<EvenNumber, ()> = 8i32.try_into();
-    assert_eq!(result, Ok(EvenNumber(8)));
-    let result: Result<EvenNumber, ()> = 5i32.try_into();
+    let result: Result<NumeroPar, ()> = 8i32.try_into();
+    assert_eq!(result, Ok(NumeroPar(8)));
+    let result: Result<NumeroPar, ()> = 5i32.try_into();
     assert_eq!(result, Err(()));
 }
 ```

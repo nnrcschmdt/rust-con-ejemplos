@@ -34,3 +34,9 @@
     - [Literales](types/literals.md)
     - [Inferencia](types/inference.md)
     - [Aliasing](types/alias.md)
+
+- [Conversión](conversion.md)
+    - [`From` e `Into`](conversion/from_into.md)
+    - [`TryFrom` y `TryInto`](conversion/try_from_try_into.md)
+    - [A y desde `String`s](conversion/string.md)
+

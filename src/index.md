@@ -23,6 +23,8 @@ ejemplos, no olvide [instalar Rust localmente][install] y consultar la
 
 - [Tipos](types.md) - Aprende a cambiar y definir tipos.
 
+- [Conversión](conversion.md)
+
 [rust]: https://www.rust-lang.org/es/
 [install]: https://www.rust-lang.org/es/tools/install
 [std]: https://doc.rust-lang.org/std/

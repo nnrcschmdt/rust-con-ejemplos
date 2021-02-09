@@ -1,50 +1,51 @@
-# To and from Strings
+# A y desde String
 
-## Converting to String
+## Convertir a String
 
-To convert any type to a `String` is as simple as implementing the [`ToString`]
-trait for the type. Rather than doing so directly, you should implement the
-[`fmt::Display`][Display] trait which automagically provides [`ToString`] and
-also allows printing the type as discussed in the section on [`print!`][print].
+Convertir cualquier tipo en un `String` es tan simple como implementar el rasgo
+[`ToString`] para el tipo. En lugar de hacerlo directamente, debe implementar
+el rasgo [`fmt::Display`][Display] que proporciona automáticamente [`ToString`]
+y también permite imprimir el tipo como se explica en la sección sobre
+[`print!`][Print].
 
 ```rust,editable
 use std::fmt;
 
-struct Circle {
-    radius: i32
+struct Circulo {
+    radio: i32
 }
 
-impl fmt::Display for Circle {
+impl fmt::Display for Circulo {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Circle of radius {}", self.radius)
+        write!(f, "Circulo de radio {}", self.radio)
     }
 }
 
 fn main() {
-    let circle = Circle { radius: 6 };
-    println!("{}", circle.to_string());
+    let circulo = Circulo { radio: 6 };
+    println!("{}", circulo.to_string());
 }
 ```
 
-## Parsing a String
+## Analizar un String
 
-One of the more common types to convert a string into is a number. The idiomatic
-approach to this is to use the [`parse`] function and either to arrange for
-type inference or to specify the type to parse using the 'turbofish' syntax.
-Both alternatives are shown in the following example.
+Uno de los tipos más comunes para convertir una cadena es un número. El enfoque
+idiomático para esto es usar la función [`parse`] y arreglar la inferencia de
+tipos o especificar el tipo a analizar usando la sintaxis 'turbofish'. Ambas
+alternativas se muestran en el siguiente ejemplo.
 
-This will convert the string into the type specified so long as the [`FromStr`]
-trait is implemented for that type. This is implemented for numerous types
-within the standard library. To obtain this functionality on a user defined type
-simply implement the [`FromStr`] trait for that type.
+Esto convertirá la cadena en el tipo especificado siempre que se implemente el
+rasgo [`FromStr`] para ese tipo. Esto se implementa para numerosos tipos dentro
+de la biblioteca estándar. Para obtener esta funcionalidad en un tipo definido
+por el usuario, simplemente implemente el rasgo [`FromStr`] para ese tipo.
 
 ```rust,editable
 fn main() {
-    let parsed: i32 = "5".parse().unwrap();
-    let turbo_parsed = "10".parse::<i32>().unwrap();
+    let analizado: i32 = "5".parse().unwrap();
+    let turbo_analizado = "10".parse::<i32>().unwrap();
 
-    let sum = parsed + turbo_parsed;
-    println!("Sum: {:?}", sum);
+    let suma = analizado + turbo_analizado;
+    println!("Suma: {:?}", suma);
 }
 ```
 
