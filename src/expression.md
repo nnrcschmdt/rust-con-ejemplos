@@ -1,54 +1,54 @@
-# Expressions
+# Expresiones
 
-A Rust program is (mostly) made up of a series of statements:
+Un programa de Rust se compone (principalmente) de una serie de declaraciones:
 
 ```
 fn main() {
-    // statement
-    // statement
-    // statement
+    // declaración 
+    // declaración
+    // declaración
 }
 ```
 
-There are a few kinds of statements in Rust. The most common two are declaring
-a variable binding, and using a `;` with an expression:
+Hay varios tipos de declaraciones en Rust. Las dos más comunes son declarar un
+enlace de variable y usar un `;` con una expresión:
 
 ```
 fn main() {
-    // variable binding
+    // enlace de variable
     let x = 5;
 
-    // expression;
+    // expresión;
     x;
     x + 1;
     15;
 }
 ```
 
-Blocks are expressions too, so they can be used as values in
-assignments. The last expression in the block will be assigned to the
-place expression such as a local variable. However, if the last expression of the block ends with a
-semicolon, the return value will be `()`.
+Los bloques también son expresiones, por lo que se pueden usar como valores en
+las asignaciones. La última expresión del bloque se asignará a la expresión de
+lugar, como una variable local. Sin embargo, si la última expresión del bloque
+termina con un punto y coma, el valor de retorno será `()`.
 
 ```rust,editable
 fn main() {
     let x = 5u32;
 
     let y = {
-        let x_squared = x * x;
-        let x_cube = x_squared * x;
+        let x_cuadrado = x * x;
+        let x_cubo = x_cuadrado * x;
 
-        // This expression will be assigned to `y`
-        x_cube + x_squared + x
+        // Esta expresión se asignará a `y`
+        x_cubo + x_cuadrado + x
     };
 
     let z = {
-        // The semicolon suppresses this expression and `()` is assigned to `z`
+        // El punto y coma suprime esta expresión y `()` se asigna a `z`
         2 * x;
     };
 
-    println!("x is {:?}", x);
-    println!("y is {:?}", y);
-    println!("z is {:?}", z);
+    println!("x es {:?}", x);
+    println!("y es {:?}", y);
+    println!("z es {:?}", z);
 }
 ```

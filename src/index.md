@@ -25,6 +25,8 @@ ejemplos, no olvide [instalar Rust localmente][install] y consultar la
 
 - [Conversión](conversion.md)
 
+- [Expresiones](expression.md)
+
 [rust]: https://www.rust-lang.org/es/
 [install]: https://www.rust-lang.org/es/tools/install
 [std]: https://doc.rust-lang.org/std/
