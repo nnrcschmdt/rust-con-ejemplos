@@ -17,7 +17,7 @@ fn main() {
         2 | 3 | 5 | 7 | 11 => println!("Este es un primo"),
         // TODO ^ Intenta agregar 13 a la lista de valores primos
         // Coincide con un rango inclusivo
-        13..=19 => println!("Un teen"),
+        13..=19 => println!("Un adolescente"),
         // Manejar el resto de casos
         _ => println!("No es especial"),
         // TODO ^ Intenta comentar este brazo general
