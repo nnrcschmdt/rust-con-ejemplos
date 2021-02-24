@@ -27,6 +27,8 @@ ejemplos, no olvide [instalar Rust localmente][install] y consultar la
 
 - [Expresiones](expression.md)
 
+- [Flujo de control](flow_control.md) - `if`/`else`, `for`, y otros.
+
 [rust]: https://www.rust-lang.org/es/
 [install]: https://www.rust-lang.org/es/tools/install
 [std]: https://doc.rust-lang.org/std/

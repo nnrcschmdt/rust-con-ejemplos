@@ -1,37 +1,38 @@
 # if/else
 
-Branching with `if`-`else` is similar to other languages. Unlike many of them,
-the boolean condition doesn't need to be surrounded by parentheses, and each
-condition is followed by a block. `if`-`else` conditionals are expressions,
-and, all branches must return the same type.
+La ramificación con `if`-`else` es similar a otros idiomas. A diferencia de
+muchos de ellos, la condición booleana no necesita estar entre paréntesis y
+cada condición va seguida de un bloque. Los condicionales `if`-`else` son
+expresiones, y todas las ramas deben devolver el mismo tipo.
 
 ```rust,editable
 fn main() {
     let n = 5;
 
     if n < 0 {
-        print!("{} is negative", n);
+        print!("{} es negativo", n);
     } else if n > 0 {
-        print!("{} is positive", n);
+        print!("{} es positivo", n);
     } else {
-        print!("{} is zero", n);
+        print!("{} es zero", n);
     }
 
-    let big_n =
+    let n_grande =
         if n < 10 && n > -10 {
-            println!(", and is a small number, increase ten-fold");
+            println!(", y es un número pequeño, aumentalo diez veces");
 
-            // This expression returns an `i32`.
+            // Esta expresión devuelve un `i32`.
             10 * n
         } else {
-            println!(", and is a big number, halve the number");
+            println!(", y es un número grande, reducelo a la mitad");
 
-            // This expression must return an `i32` as well.
+            // Esta expresión debe devolver un `i32` también.
             n / 2
-            // TODO ^ Try suppressing this expression with a semicolon.
+            // TODO ^ Intenta suprimir esta expresión con un punto y coma.
         };
-    //   ^ Don't forget to put a semicolon here! All `let` bindings need it.
+    //   ^ ¡No olvides poner un punto y coma aquí! Todos los enlaces `let` lo
+    //     necesitan.
 
-    println!("{} -> {}", n, big_n);
+    println!("{} -> {}", n, n_grande);
 }
 ```

@@ -1,6 +1,6 @@
-# structs
+# estructuras
 
-Similarly, a `struct` can be destructured as shown:
+De manera similar, una `estructura` se puede desestructurar como se muestra:
 
 ```rust,editable
 fn main() {
@@ -9,24 +9,24 @@ fn main() {
         y: u32,
     }
 
-    // Try changing the values in the struct to see what happens
+    // Intenta cambiar los valores en la estructura para ver qué sucede
     let foo = Foo { x: (1, 2), y: 3 };
 
     match foo {
-        Foo { x: (1, b), y } => println!("First of x is 1, b = {},  y = {} ", b, y),
+        Foo { x: (1, b), y } => println!("Primero de x es 1, b = {},  y = {} ", b, y),
 
-        // you can destructure structs and rename the variables,
-        // the order is not important
-        Foo { y: 2, x: i } => println!("y is 2, i = {:?}", i),
+        // puedes desestructurar estructuras y cambiar el nombre de las variables,
+        // el orden no es importante
+        Foo { y: 2, x: i } => println!("y es 2, i = {:?}", i),
 
-        // and you can also ignore some variables:
-        Foo { y, .. } => println!("y = {}, we don't care about x", y),
-        // this will give an error: pattern does not mention field `x`
+        // y también puedes ignorar algunas variables:
+        Foo { y, .. } => println!("y = {}, no nos importa x", y),
+        // esto dará un error: el patrón no menciona el campo `x`
         //Foo { y } => println!("y = {}", y),
     }
 }
 ```
 
-### See also:
+### Ve también:
 
-[Structs](../../../custom_types/structs.md)
+[Estructuras](../../../custom_types/structs.md)

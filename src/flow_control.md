@@ -1,4 +1,6 @@
-# Flow of Control
+# Flujo de control 
 
-An essential part of any programming languages are ways to modify control flow:
-`if`/`else`, `for`, and others. Let's talk about them in Rust.
+Una parte esencial de cualquier lenguaje de programación son las formas de
+modificar el flujo de control: `if`/` else`, `for`, y otros. Hablemos de ellos
+en Rust.
+

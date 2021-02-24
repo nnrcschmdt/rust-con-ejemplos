@@ -1,39 +1,39 @@
-# Guards
+# Guardias
 
-A `match` *guard* can be added to filter the arm.
+Un `match` *guard* se puede agregar para filtrar el brazo.
 
 ```rust,editable
 fn main() {
-    let pair = (2, -2);
-    // TODO ^ Try different values for `pair`
+    let par = (2, -2);
+    // TODO ^ Prueba diferentes valores para `par`
 
-    println!("Tell me about {:?}", pair);
-    match pair {
-        (x, y) if x == y => println!("These are twins"),
-        // The ^ `if condition` part is a guard
-        (x, y) if x + y == 0 => println!("Antimatter, kaboom!"),
-        (x, _) if x % 2 == 1 => println!("The first one is odd"),
-        _ => println!("No correlation..."),
+    println!("Háblame de {:?}", par);
+    match par {
+        (x, y) if x == y => println!("Estos son mellizos"),
+        // La parte ^ `if condition` es un guardia
+        (x, y) if x + y == 0 => println!("¡Antimateria, kaboom!"),
+        (x, _) if x % 2 == 1 => println!("El primero es impar"),
+        _ => println!("Sin correlación..."),
     }
 }
 ```
 
-Note that the compiler does not check arbitrary expressions for whether all
-possible conditions have been checked.  Therefore, you must use the `_` pattern
-at the end.
+Tenga en cuenta que el compilador no comprueba las expresiones arbitrarias para
+comprobar si se han comprobado todas las condiciones posibles. Por lo tanto,
+debes utilizar el patrón `_` al final.
 
 ```rust,editable
 fn main() {
-    let number: u8 = 4;
+    let numero: u8 = 4;
 
-    match number {
-        i if i == 0 => println!("Zero"),
-        i if i > 0 => println!("Greater than zero"),
-        _ => println!("Fell through"), // This should not be possible to reach
+    match numero {
+        i if i == 0 => println!("Cero"),
+        i if i > 0 => println!("Mayor que cero"),
+        _ => println!("Se cayó"), // Esto no debería ser posible de alcanzar
     }
 }
 ```
 
-### See also:
+### Ve también:
 
-[Tuples](../../primitives/tuples.md)
+[Tuplas](../../primitives/tuples.md)

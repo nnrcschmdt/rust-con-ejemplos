@@ -1,65 +1,69 @@
-# pointers/ref
+# punteros/referencias
 
-For pointers, a distinction needs to be made between destructuring
-and dereferencing as they are different concepts which are used
-differently from a language like `C`.
+Para los punteros, se debe hacer una distinción entre desestructuración y
+desreferenciación, ya que son conceptos diferentes que se usan de manera
+diferente a un lenguaje como `C`.
 
- * Dereferencing uses `*`
- * Destructuring uses `&`, `ref`, and `ref mut`
+* Desreferenciación usa `*`
+* Desestructuración usa `&`, `ref`, y `ref mut`
 
 ```rust,editable
 fn main() {
-    // Assign a reference of type `i32`. The `&` signifies there
-    // is a reference being assigned.
-    let reference = &4;
+    // Asigna una referencia de tipo `i32`. El `&` significa que hay una
+    // referencia asignada.
+    let referencia = &4;
 
-    match reference {
-        // If `reference` is pattern matched against `&val`, it results
-        // in a comparison like:
+    match referencia {
+        // Si el patrón de `referencia` coincide con `&val`, el resultado es
+        // una comparación como:
         // `&i32`
         // `&val`
-        // ^ We see that if the matching `&`s are dropped, then the `i32`
-        // should be assigned to `val`.
-        &val => println!("Got a value via destructuring: {:?}", val),
+        // ^ Vemos que si se eliminan los `&`s coincidentes, entonces el `i32`
+        // debe asignarse a `val`.
+        &val => println!("Obtuve un valor a través de la desestructuración: {:?}", val),
     }
 
-    // To avoid the `&`, you dereference before matching.
-    match *reference {
-        val => println!("Got a value via dereferencing: {:?}", val),
+    // Para evitar el `&`, elimina la referencia antes de hacer coincidir.
+    match *referencia {
+        val => println!("Obtuve un valor a través de la eliminación de referencias: {:?}", val),
     }
 
-    // What if you don't start with a reference? `reference` was a `&`
-    // because the right side was already a reference. This is not
-    // a reference because the right side is not one.
-    let _not_a_reference = 3;
+    // ¿Qué pasa si no empiezas con una referencia? `reference` era un `&` 
+    // porque el lado derecho ya era una referencia. Esto no es una referencia
+    // porque el lado derecho no es uno.
 
-    // Rust provides `ref` for exactly this purpose. It modifies the
-    // assignment so that a reference is created for the element; this
-    // reference is assigned.
-    let ref _is_a_reference = 3;
+    let _no_es_una_referencia = 3;
 
-    // Accordingly, by defining 2 values without references, references
-    // can be retrieved via `ref` and `ref mut`.
-    let value = 5;
-    let mut mut_value = 6;
+    // Rust proporciona `ref` exactamente para este propósito. Modifica la
+    // asignación para que se cree una referencia para el elemento; se asigna
+    // esta referencia.
 
-    // Use `ref` keyword to create a reference.
-    match value {
-        ref r => println!("Got a reference to a value: {:?}", r),
+    let ref _es_una_referencia = 3;
+
+    // En consecuencia, al definir 2 valores sin referencias, las referencias
+    // se pueden recuperar mediante `ref` y `ref mut`.
+
+    let valor = 5;
+    let mut valor_mutable = 6;
+
+    // Utiliza la palabra clave `ref` para crear una referencia.
+    match valor {
+        ref r => println!("Obtuve una referencia a un valor: {:?}", r),
     }
 
-    // Use `ref mut` similarly.
-    match mut_value {
+    // Usa `ref mut` de manera similar
+    match valor_mutable {
         ref mut m => {
-            // Got a reference. Gotta dereference it before we can
-            // add anything to it.
+          // Obtuve una referencia. Tengo que eliminar la referencia antes de
+          // que podamos agregarle algo.
             *m += 10;
-            println!("We added 10. `mut_value`: {:?}", m);
+            println!("Añadimos 10. `valor_mutable`: {:?}", m);
         },
     }
 }
 ```
-
+<!--
 ### See also:
 
 [The ref pattern](../../../scope/borrow/ref.md)
+-->

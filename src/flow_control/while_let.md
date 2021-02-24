@@ -1,61 +1,62 @@
 # while let
 
-Similar to `if let`, `while let` can make awkward `match` sequences
-more tolerable. Consider the following sequence that increments `i`:
+Similar a `if let`, `while let` puede hacer que las secuencias de `match`
+incómodas sean más tolerables. Considera la siguiente secuencia que incrementa
+`i`:
 
 ```rust
-// Make `optional` of type `Option<i32>`
-let mut optional = Some(0);
+// Haz `opcional` del tipo `Option<i32>`
+let mut opcional = Some(0);
 
-// Repeatedly try this test.
+// Intenta repetidamente esta prueba.
 loop {
-    match optional {
-        // If `optional` destructures, evaluate the block.
+    match opcional {
+        // Si `opcional` de desestructura, evalúa el bloque.
         Some(i) => {
             if i > 9 {
-                println!("Greater than 9, quit!");
-                optional = None;
+                println!("Mayor que 9, ¡abandona!");
+                opcional = None;
             } else {
-                println!("`i` is `{:?}`. Try again.", i);
-                optional = Some(i + 1);
+                println!("`i` es `{:?}`. Inténtalo de nuevo.", i);
+                opcional = Some(i + 1);
             }
-            // ^ Requires 3 indentations!
+            // ^ ¡Requiere 3 sangrías!
         },
-        // Quit the loop when the destructure fails:
+        // Sal del ciclo cuando falle la desestructuración:
         _ => { break; }
-        // ^ Why should this be required? There must be a better way!
+        // ^ ¿Por qué debería ser necesario? ¡Tiene que haber una mejor manera!
     }
 }
 ```
 
-Using `while let` makes this sequence much nicer:
+El uso de `while let` hace que esta secuencia sea mucho más agradable:
 
 ```rust,editable
 fn main() {
-    // Make `optional` of type `Option<i32>`
-    let mut optional = Some(0);
+    // Haz `opcional` del tipo `Option<i32>`
+    let mut opcional = Some(0);
 
-    // This reads: "while `let` destructures `optional` into
-    // `Some(i)`, evaluate the block (`{}`). Else `break`.
-    while let Some(i) = optional {
+    // Esto dice: mientras que `let` desestructura `opcional` en
+    // `Some (i)`, evalúa el bloque (`{}`). De lo contrario, `break`.
+    while let Some(i) = opcional {
         if i > 9 {
-            println!("Greater than 9, quit!");
-            optional = None;
+            println!("Mayor que 9, ¡abandona!");
+            opcional = None;
         } else {
-            println!("`i` is `{:?}`. Try again.", i);
-            optional = Some(i + 1);
+            println!("`i` es `{:?}`. Inténtalo de nuevo.", i);
+            opcional = Some(i + 1);
         }
-        // ^ Less rightward drift and doesn't require
-        // explicitly handling the failing case.
+        // ^ Menos desviación hacia la derecha y no requiere
+        // manejo explícito del caso fallido.
     }
-    // ^ `if let` had additional optional `else`/`else if`
-    // clauses. `while let` does not have these.
+    // ^ `if let` tenía clausulas cláusulas adicionales `else`/`else if`.
+    // `while let` no tiene estas.
 }
 ```
 
-### See also:
+### Ve también:
 
-[`enum`][enum], [`Option`][option], and the [RFC][while_let_rfc]
+[`enum`][enum]<!--, [`Option`][option], --> y el [RFC][while_let_rfc]
 
 [enum]: ../custom_types/enum.md
 [option]: ../std/option.md

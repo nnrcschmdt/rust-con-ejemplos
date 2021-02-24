@@ -1,12 +1,11 @@
-# Destructuring
+# Desestructuración
 
-A `match` block can destructure items in a variety of ways.
+Un bloque `match` puede desestructurar elementos de varias formas.
 
-* [Destructuring Tuples][tuple]
-* [Destructuring Enums][enum]
-* [Destructuring Pointers][refs]
-* [Destructuring Structures][struct]
-
+* [Desestructurar Tuplas][tuple]
+* [Desestructurar Enums][enum]
+* [Punteros][refs]
+* [Estructuras][struct]
 
 [enum]: destructuring/destructure_enum.md
 [refs]: destructuring/destructure_pointers.md

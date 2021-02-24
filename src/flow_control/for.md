@@ -1,17 +1,17 @@
-# for loops
+# bucles for
 
-## for and range
+## for y range
 
-The `for in` construct can be used to iterate through an `Iterator`.
-One of the easiest ways to create an iterator is to use the range
-notation `a..b`. This yields values from `a` (inclusive) to `b`
-(exclusive) in steps of one.
+La construcción `for in` se puede utilizar para iterar a través de un
+`Iterator`. Una de las formas más sencillas de crear un iterador es utilizar la
+notación de rango `a..b`. Esto produce valores de `a` (inclusive) a `b`
+(exclusivo) en pasos de uno.
 
-Let's write FizzBuzz using `for` instead of `while`.
+Escribamos FizzBuzz usando `for` en lugar de `while`.
 
 ```rust,editable
 fn main() {
-    // `n` will take the values: 1, 2, ..., 100 in each iteration
+    // `n` tomará los valores: 1, 2, ..., 100 en cada iteración
     for n in 1..101 {
         if n % 15 == 0 {
             println!("fizzbuzz");
@@ -26,12 +26,12 @@ fn main() {
 }
 ```
 
-Alternatively, `a..=b` can be used for a range that is inclusive on both ends.
-The above can be written as:
+Alternativamente, `a..=b` puede usarse para un rango que sea inclusivo en ambos
+extremos. Lo anterior se puede escribir como:
 
 ```rust,editable
 fn main() {
-    // `n` will take the values: 1, 2, ..., 100 in each iteration
+    // `n` tomará los valores: 1, 2, ..., 100 en cada iteración
     for n in 1..=100 {
         if n % 15 == 0 {
             println!("fizzbuzz");
@@ -46,80 +46,85 @@ fn main() {
 }
 ```
 
-## for and iterators
+## for e iteradores
 
-The `for in` construct is able to interact with an `Iterator` in several ways.
-As discussed in the section on the [Iterator][iter] trait, by default the `for`
-loop will apply the `into_iter` function to the collection. However, this is
-not the only means of converting collections into iterators.
+La construcción `for in` puede interactuar con un `Iterator` de varias formas.
+Como se discutió en la sección sobre el rasgo <!--[Iterator][iter],-->
+`Iterator`, por defecto el bucle `for` aplicará la función `into_iter` a la
+colección. Sin embargo, este no es el único medio de convertir colecciones en
+iteradores.
 
-`into_iter`, `iter` and `iter_mut` all handle the conversion of a collection
-into an iterator in different ways, by providing different views on the data
-within.
+`into_iter`, `iter` e `iter_mut` manejan la conversión de una colección en un
+iterador de diferentes maneras, proporcionando diferentes vistas de los datos
+que contiene.
 
-* `iter` - This borrows each element of the collection through each iteration.
-  Thus leaving the collection untouched and available for reuse after the loop.
+* `iter`: toma prestado cada elemento de la colección durante de cada
+  iteración. Dejando así la colección intacta y disponible para su
+  reutilización después del bucle.
 
 ```rust, editable
 fn main() {
-    let names = vec!["Bob", "Frank", "Ferris"];
+    let nombres = vec!["Bob", "Frank", "Ferris"];
 
-    for name in names.iter() {
-        match name {
-            &"Ferris" => println!("There is a rustacean among us!"),
-            // TODO ^ Try deleting the & and matching just "Ferris"
-            _ => println!("Hello {}", name),
+    for nombre in nombres.iter() {
+        match nombre {
+            &"Ferris" => println!("¡Hay un rustáceo entre nosotros!"),
+            // TODO ^ Intenta eliminar el & y hacer coincidir solo "Ferris"
+            _ => println!("Hola {}", nombre),
         }
     }
     
-    println!("names: {:?}", names);
+    println!("nombres: {:?}", nombres);
 }
 ```
 
-* `into_iter` - This consumes the collection so that on each iteration the exact
-  data is provided. Once the collection has been consumed it is no longer
-  available for reuse as it has been 'moved' within the loop.
+* `into_iter` - Esto consume la colección de modo que en cada iteración se
+  proporcionan los datos exactos. Una vez que la colección se ha consumido, ya
+  no está disponible para su reutilización, ya que se ha "movido" dentro del
+  bucle.
 
 ```rust, editable, ignore
 fn main() {
-    let names = vec!["Bob", "Frank", "Ferris"];
+    let nombres = vec!["Bob", "Frank", "Ferris"];
 
-    for name in names.into_iter() {
-        match name {
-            "Ferris" => println!("There is a rustacean among us!"),
-            _ => println!("Hello {}", name),
+    for nombre in nombres.into_iter() {
+        match nombre {
+            "Ferris" => println!("¡Hay un rustáceo entre nosotros!");
+            _ => println!("Hola {}", nombre),
         }
     }
     
-    println!("names: {:?}", names);
-    // FIXME ^ Comment out this line
+    println!("nombres: {:?}", nombres);
+    // FIXME ^ Commenta estas línea
 }
 ```
 
-* `iter_mut` - This mutably borrows each element of the collection, allowing for
-  the collection to be modified in place.
+* `iter_mut` - Esto toma prestado de manera mutable cada elemento de la
+  colección, lo que permite que la colección se modifique en su lugar.
 
 ```rust, editable
 fn main() {
-    let mut names = vec!["Bob", "Frank", "Ferris"];
+    let mut nombres = vec!["Bob", "Frank", "Ferris"];
 
-    for name in names.iter_mut() {
-        *name = match name {
-            &mut "Ferris" => "There is a rustacean among us!",
-            _ => "Hello",
+    for nombre in nombres.iter_mut() {
+        *nombre = match nombre {
+            &mut "Ferris" => "¡Hay un rustáceo entre nosotros!",
+            _ => "Hola",
         }
     }
 
-    println!("names: {:?}", names);
+    println!("nombres: {:?}", nombres);
 }
 ```
 
-In the above snippets note the type of `match` branch, that is the key
-difference in the types of iteration. The difference in type then of course
-implies differing actions that are able to be performed.
+En los fragmentos anteriores, observa el tipo de rama `match`, que es la
+diferencia clave en los tipos de iteración. La diferencia de tipo, por
+supuesto, implica acciones diferentes que se pueden realizar.
 
+<!--
 ### See also:
 
 [Iterator][iter]
+-->
 
 [iter]: ../trait/iter.md

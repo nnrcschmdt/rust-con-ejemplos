@@ -1,22 +1,22 @@
-# Returning from loops
+# Devolver desde bucles
 
-One of the uses of a `loop` is to retry an operation until it succeeds. If the
-operation returns a value though, you might need to pass it to the rest of the
-code: put it after the `break`, and it will be returned by the `loop`
-expression.
+Uno de los usos de un `loop` es reintentar una operación hasta que tenga éxito.
+Sin embargo, si la operación devuelve un valor, es posible que deba pasarlo al
+resto del código: colócalo después del `break`, y la expresión ` loop` lo
+devolverá
 
 ```rust,editable
 fn main() {
-    let mut counter = 0;
+    let mut contador = 0;
 
-    let result = loop {
-        counter += 1;
+    let resultado = loop {
+        contador += 1;
 
-        if counter == 10 {
-            break counter * 2;
+        if contador == 10 {
+            break contador * 2;
         }
     };
 
-    assert_eq!(result, 20);
+    assert_eq!(resultado, 20);
 }
 ```

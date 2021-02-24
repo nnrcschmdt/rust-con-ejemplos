@@ -1,34 +1,34 @@
 # loop
 
-Rust provides a `loop` keyword to indicate an infinite loop.
+Rust proporciona una palabra clave `loop` para indicar un bucle infinito.
 
-The `break` statement can be used to exit a loop at anytime, whereas the
-`continue` statement can be used to skip the rest of the iteration and start a
-new one.
+La instrucción `break` se puede usar para salir de un bucle en cualquier
+momento, mientras que la instrucción `continue` se puede usar para omitir el
+resto de la iteración y comenzar una nuevo.
 
 ```rust,editable
 fn main() {
-    let mut count = 0u32;
+    let mut contador = 0u32;
 
-    println!("Let's count until infinity!");
+    println!("¡Contemos hasta el infinito!");
 
-    // Infinite loop
+    // Bucle infinito
     loop {
-        count += 1;
+        contador += 1;
 
-        if count == 3 {
-            println!("three");
+        if contador == 3 {
+            println!("tres");
 
-            // Skip the rest of this iteration
+            // Omite el resto de esta iteración
             continue;
         }
 
-        println!("{}", count);
+        println!("{}", contador);
 
-        if count == 5 {
-            println!("OK, that's enough");
+        if contador == 5 {
+            println!("OK, es suficiente");
 
-            // Exit this loop
+            // Salir de este bucle
             break;
         }
     }

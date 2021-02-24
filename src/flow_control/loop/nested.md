@@ -1,29 +1,29 @@
-# Nesting and labels
+# Anidamiento y etiquetas
 
-It's possible to `break` or `continue` outer loops when dealing with nested
-loops. In these cases, the loops must be annotated with some `'label`, and the
-label must be passed to the `break`/`continue` statement.
+Es posible "romper" o "continuar" los bucles externos cuando se trata de bucles
+anidados. En estos casos, los bucles deben anotarse con alguna etiqueta y la
+etiqueta debe pasarse a la declaración `break`/`continue`.
 
 ```rust,editable
 #![allow(unreachable_code)]
 
 fn main() {
-    'outer: loop {
-        println!("Entered the outer loop");
+    'externo: loop {
+        println!("Entró en el bucle externo");
 
-        'inner: loop {
-            println!("Entered the inner loop");
+        'interno: loop {
+            println!("Entró en el bucle interno");
 
-            // This would break only the inner loop
+            // Esto rompería solo el bucle interno
             //break;
 
-            // This breaks the outer loop
-            break 'outer;
+            // Esto rompe el bucle externo
+            break 'externo;
         }
 
-        println!("This point will never be reached");
+        println!("Este punto nunca se alcanzará");
     }
 
-    println!("Exited the outer loop");
+    println!("Salió del bucle exterior");
 }
 ```

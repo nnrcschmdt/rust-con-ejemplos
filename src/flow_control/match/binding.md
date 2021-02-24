@@ -1,53 +1,57 @@
-# Binding
+# Enlace
 
-Indirectly accessing a variable makes it impossible to branch and use that
-variable without re-binding. `match` provides the `@` sigil for binding values to
-names:
+Acceder indirectamente a una variable hace que sea imposible bifurcar y usar
+esa variable sin volver a enlazar. `match` proporciona el sigilo `@` para
+vincular valores a nombres:
 
 ```rust,editable
-// A function `age` which returns a `u32`.
-fn age() -> u32 {
+// Una función `edad` que devuelve un `u32`.
+fn edad() -> u32 {
     15
 }
 
 fn main() {
-    println!("Tell me what type of person you are");
+    println!("Dime qué tipo de persona eres");
 
-    match age() {
-        0             => println!("I haven't celebrated my first birthday yet"),
-        // Could `match` 1 ..= 12 directly but then what age
-        // would the child be? Instead, bind to `n` for the
-        // sequence of 1 ..= 12. Now the age can be reported.
-        n @ 1  ..= 12 => println!("I'm a child of age {:?}", n),
-        n @ 13 ..= 19 => println!("I'm a teen of age {:?}", n),
-        // Nothing bound. Return the result.
-        n             => println!("I'm an old person of age {:?}", n),
+    match edad() {
+        0             => println!("Aún no he celebrado mi primer cumpleaños"),
+        // Podría coincidir 1 ..= 12 directamente pero entonces qué edad
+        // ¿Sería el niño? En su lugar, enlaza con `n` para la
+        // secuencia de 1 ..= 12. Ahora se puede informar la edad.
+        n @ 1  ..= 12 => println!("Soy un niño de edad {:?}", n),
+        n @ 13 ..= 19 => println!("Soy un adolescente de edad {:?}", n),
+        // Nada enlazado. Devuelve el resultado.
+        n             => println!("Soy una persona mayor de edad {:?}", n),
     }
 }
 ```
 
-You can also use binding to "destructure" `enum` variants, such as `Option`:
+También puedes utilizar el enlace para "desestructurar" variantes de `enum`,
+como `Option`:
 
 ```rust,editable
-fn some_number() -> Option<u32> {
+fn algun_numero() -> Option<u32> {
     Some(42)
 }
 
 fn main() {
-    match some_number() {
-        // Got `Some` variant, match if its value, bound to `n`,
-        // is equal to 42.
-        Some(n @ 42) => println!("The Answer: {}!", n),
+    match algun_numero() {
+        // Obtuve la variante `Some`, coincide si su valor, vinculado a `n`,
+        // es igual a 42.
+        Some(n @ 42) => println!("La respuesta: {}!", n),
         // Match any other number.
-        Some(n)      => println!("Not interesting... {}", n),
-        // Match anything else (`None` variant).
+        Some(n)      => println!("No es interesante... {}", n),
+        // Coincide con cualquier otra cosa (variante `None`).
         _            => (),
     }
 }
 ```
 
-### See also:
-[`functions`][functions], [`enums`][enums] and [`Option`][option]
+### Ve también:
+
+[`enums`][enums]
+
+<!--[`functions`][functions], [`enums`][enums] y [`Option`][option] -->
 
 [functions]: ../../fn.md
 [enums]: ../../custom_types/enum.md

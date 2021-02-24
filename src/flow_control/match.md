@@ -1,37 +1,37 @@
 # match
 
-Rust provides pattern matching via the `match` keyword, which can be used like
-a C `switch`. The first matching arm is evaluated and all possible values must be
-covered.
+Rust proporciona coincidencia de patrones a través de la palabra clave `match`,
+que se puede usar como un `switch` en C. Se evalúa el primer brazo coincidente
+y se deben cubrir todos los valores posibles.
 
 ```rust,editable
 fn main() {
-    let number = 13;
-    // TODO ^ Try different values for `number`
+    let numero = 13;
+    // TODO ^ Prueba diferentes valores para `numero`
 
-    println!("Tell me about {}", number);
-    match number {
-        // Match a single value
-        1 => println!("One!"),
-        // Match several values
-        2 | 3 | 5 | 7 | 11 => println!("This is a prime"),
-        // TODO ^ Try adding 13 to the list of prime values
-        // Match an inclusive range
-        13..=19 => println!("A teen"),
-        // Handle the rest of cases
-        _ => println!("Ain't special"),
-        // TODO ^ Try commenting out this catch-all arm
+    println!("Háblame de {}", numero);
+    match numero {
+        // Coincide con un solo valor
+        1 => println!("¡Uno!"),
+        // Coincide con varios valores
+        2 | 3 | 5 | 7 | 11 => println!("Este es un primo"),
+        // TODO ^ Intenta agregar 13 a la lista de valores primos
+        // Coincide con un rango inclusivo
+        13..=19 => println!("Un teen"),
+        // Manejar el resto de casos
+        _ => println!("No es especial"),
+        // TODO ^ Intenta comentar este brazo general
     }
 
-    let boolean = true;
-    // Match is an expression too
-    let binary = match boolean {
-        // The arms of a match must cover all the possible values
+    let booleano = true;
+    // Match es una expresión también
+    let binario = match booleano {
+        // Los brazos de un match deben cubrir todos los valores posibles
         false => 0,
         true => 1,
-        // TODO ^ Try commenting out one of these arms
+        // TODO ^ Intenta comentar uno de estos brazos
     };
 
-    println!("{} -> {}", boolean, binary);
+    println!("{} -> {}", booleano, binario);
 }
 ```

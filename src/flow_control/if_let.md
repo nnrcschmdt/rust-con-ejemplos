@@ -1,65 +1,68 @@
 # if let
 
-For some use cases, when matching enums, `match` is awkward. For example:
+Para algunos casos de uso, al hacer coincidir enumeraciones, `match` es
+incómodo. Por ejemplo:
 
 ```rust
-// Make `optional` of type `Option<i32>`
-let optional = Some(7);
+// Haz `opcional` de tipo `Option<i32>`
+let opcional = Some(7);
 
-match optional {
+match opcional {
     Some(i) => {
-        println!("This is a really long string and `{:?}`", i);
-        // ^ Needed 2 indentations just so we could destructure
-        // `i` from the option.
+        println!("Esta es una cadena muy larga y `{:?}`", i);
+        // ^ Necesitamos 2 sangrías solo para poder desestructurar
+        // `i` de la opción.
     },
     _ => {},
-    // ^ Required because `match` is exhaustive. Doesn't it seem
-    // like wasted space?
+    // ^ Obligatorio porque `match` es exhaustivo. No parece
+    // como espacio desperdiciado?
 };
 
 ```
 
-`if let` is cleaner for this use case and in addition allows various
-failure options to be specified:
+`if let` es más limpio para este caso de uso y además permite especificar
+varias opciones de falla:
 
 ```rust,editable
 fn main() {
-    // All have type `Option<i32>`
-    let number = Some(7);
-    let letter: Option<i32> = None;
+    // Todos tienen el tipo `Option<i32>`
+    let numero = Some(7);
+    let letra: Option<i32> = None;
     let emoticon: Option<i32> = None;
 
+    // La construcción `if let` dice: if `let` desestructura `numero` en
+    // `Some(i)`, evalúa el bloque (`{}`).
     // The `if let` construct reads: "if `let` destructures `number` into
-    // `Some(i)`, evaluate the block (`{}`).
-    if let Some(i) = number {
-        println!("Matched {:?}!", i);
+    if let Some(i) = numero {
+        println!("Coincidencia {:?}!", i);
     }
 
-    // If you need to specify a failure, use an else:
-    if let Some(i) = letter {
-        println!("Matched {:?}!", i);
+    // Si necesitas especificar una falla, usa un else:
+    if let Some(i) = letra {
+        println!("Coincidencia {:?}!", i);
     } else {
-        // Destructure failed. Change to the failure case.
-        println!("Didn't match a number. Let's go with a letter!");
+        // La desestructuración falló. Cambia al caso de falla.
+        println!("No coincide con un número. ¡Vamos con una letra!");
     }
 
-    // Provide an altered failing condition.
-    let i_like_letters = false;
+    // Proporciona una condición de falla alterada.
+    let me_gustan_las_letras = false;
 
     if let Some(i) = emoticon {
-        println!("Matched {:?}!", i);
-    // Destructure failed. Evaluate an `else if` condition to see if the
-    // alternate failure branch should be taken:
-    } else if i_like_letters {
-        println!("Didn't match a number. Let's go with a letter!");
+        println!("Coincidencia {:?}!", i);
+    // Falló la desestructuración. Evalúa una condición `else if` para ver si
+    // se debe tomar una rama de falla alternativa:
+    } else if me_gustan_las_letras {
+        println!("No coincide con un número. ¡Vamos con una letra!");
     } else {
-        // The condition evaluated false. This branch is the default:
-        println!("I don't like letters. Let's go with an emoticon :)!");
+        // La condición evaluada como falsa. Esta rama es la predeterminada:
+        println!("No me gustan las letras. ¡Vamos con un emoticón :)!");
     }
 }
 ```
 
-In the same way, `if let` can be used to match any enum value:
+De la misma manera, `if let` puede usarse para coincidir con cualquier valor de
+enumeración:
 
 ```rust,editable
 // Our example enum
@@ -70,38 +73,42 @@ enum Foo {
 }
 
 fn main() {
-    // Create example variables
+    // Crea variables ejemplo
     let a = Foo::Bar;
     let b = Foo::Baz;
     let c = Foo::Qux(100);
     
-    // Variable a matches Foo::Bar
+    // La variable a coincide con Foo::Bar
     if let Foo::Bar = a {
-        println!("a is foobar");
+        println!("a es foobar");
     }
     
-    // Variable b does not match Foo::Bar
-    // So this will print nothing
+    // La variable b no coincide con Foo::Bar
+    // Entonces esto no imprimirá nada
     if let Foo::Bar = b {
-        println!("b is foobar");
+        println!("b es foobar");
     }
     
-    // Variable c matches Foo::Qux which has a value
-    // Similar to Some() in the previous example
-    if let Foo::Qux(value) = c {
-        println!("c is {}", value);
+    // La variable c coincide con Foo::Qux que tiene un valor
+    // Similar a Some() en el ejemplo anterior
+    if let Foo::Qux(valor) = c {
+        println!("c es {}", valor);
     }
 
-    // Binding also works with `if let`
-    if let Foo::Qux(value @ 100) = c {
-        println!("c is one hundred");
+    // El enlace también funciona con `if let`
+    if let Foo::Qux(valor @ 100) = c {
+        println!("c es cien");
     }
 }
 ```
 
-Another benefit is that `if let` allows us to match non-parameterized enum variants. This is true even in cases where the enum doesn't implement or derive `PartialEq`. In such cases `if Foo::Bar == a` would fail to compile, because instances of the enum cannot be equated, however `if let` will continue to work.
+Otro beneficio es que `if let` nos permite hacer coincidir variantes de
+enumeración no parametrizadas. Esto es cierto incluso en los casos en que la
+enumeración no implementa o deriva `PartialEq`. En tales casos, `if Foo::Bar ==
+a` fallaría en la compilación, porque las instancias de la enumeración no se
+pueden equiparar, sin embargo, `if let` continuará funcionando.
 
-Would you like a challenge? Fix the following example to use `if let`:
+¿Quieres un desafío? Corrige el siguiente ejemplo para usar `if let`:
 
 ```rust,editable,ignore,mdbook-runnable
 // This enum purposely neither implements nor derives PartialEq.
@@ -111,17 +118,17 @@ enum Foo {Bar}
 fn main() {
     let a = Foo::Bar;
 
-    // Variable a matches Foo::Bar
+    // La variable a coincide con Foo::Bar
     if Foo::Bar == a {
-    // ^-- this causes a compile-time error. Use `if let` instead.
-        println!("a is foobar");
+    // ^-- esto provoca un error en tiempo de compilación. Utiliza `if let` en su lugar.
+        println!("a es foobar");
     }
 }
 ```
 
-### See also:
+### Ve también:
 
-[`enum`][enum], [`Option`][option], and the [RFC][if_let_rfc]
+[`enum`][enum] <!--, [`Option`][option], --> y el [RFC][if_let_rfc]
 
 [enum]: ../custom_types/enum.md
 [if_let_rfc]: https://github.com/rust-lang/rfcs/pull/160
