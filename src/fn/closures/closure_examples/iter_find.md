@@ -1,20 +1,20 @@
-# Searching through iterators
+# Buscar a través de iteradores
 
-`Iterator::find` is a function which iterates over an iterator and searches for the 
-first value which satisfies some condition. If none of the values satisfy the 
-condition, it returns `None`. Its signature:
+`Iterator::find` es una función que itera sobre un iterador y busca el primer
+valor que satisface alguna condición. Si ninguno de los valores satisface la
+condición, devuelve `None`. Su firma:
 
 ```rust,ignore
 pub trait Iterator {
-    // The type being iterated over.
+    // El tipo sobre el que se itera
     type Item;
 
-    // `find` takes `&mut self` meaning the caller may be borrowed
-    // and modified, but not consumed.
+    // `find` toma `&mut self`, lo que significa que la persona que llama puede
+    // ser prestada y modificada, pero no consumida.
     fn find<P>(&mut self, predicate: P) -> Option<Self::Item> where
-        // `FnMut` meaning any captured variable may at most be
-        // modified, not consumed. `&Self::Item` states it takes
-        // arguments to the closure by reference.
+        // `FnMut` significa que cualquier variable capturada puede ser como
+        // máximo modificada, no consumida. `&Self::Item` indica que se
+        // necesita argumentos a la clausura por referencia.
         P: FnMut(&Self::Item) -> bool {}
 }
 ```
@@ -24,45 +24,45 @@ fn main() {
     let vec1 = vec![1, 2, 3];
     let vec2 = vec![4, 5, 6];
 
-    // `iter()` for vecs yields `&i32`.
+    // `iter()` para vecs produce `&i32`.
     let mut iter = vec1.iter();
-    // `into_iter()` for vecs yields `i32`.
+    // `into_iter()` para vecs produce `i32`.
     let mut into_iter = vec2.into_iter();
 
-    // `iter()` for vecs yields `&i32`, and we want to reference one of its
-    // items, so we have to destructure `&&i32` to `i32`
-    println!("Find 2 in vec1: {:?}", iter     .find(|&&x| x == 2));
-    // `into_iter()` for vecs yields `i32`, and we want to reference one of
-    // its items, so we have to destructure `&i32` to `i32`
-    println!("Find 2 in vec2: {:?}", into_iter.find(| &x| x == 2));
+    // `iter()` para vecs produce `&i32`, y queremos referenciar a uno de sus
+    // elementos, así que tenemos que desestructurar `&&i32` a `i32`
+    println!("Encuentra 2 en vec1: {:?}", iter     .find(|&&x| x == 2));
+    // `into_iter()` para vecs produce `i32`, y queremos referenciar a uno de
+    // sus elementos, así que tenemos que desestructurar `&i32` a `i32`
+    println!("Encuentra 2 en vec2: {:?}", into_iter.find(| &x| x == 2));
 
     let array1 = [1, 2, 3];
     let array2 = [4, 5, 6];
 
-    // `iter()` for arrays yields `&i32`
-    println!("Find 2 in array1: {:?}", array1.iter()     .find(|&&x| x == 2));
-    // `into_iter()` for arrays unusually yields `&i32`
-    println!("Find 2 in array2: {:?}", array2.into_iter().find(|&&x| x == 2));
+    // `iter()` para matrices produce `&i32`
+    println!("Encuentra 2 en array1: {:?}", array1.iter()     .find(|&&x| x == 2));
+    // `into_iter()` para matrices inusualmente produce `&i32`
+    println!("Encuentra 2 en array2: {:?}", array2.into_iter().find(|&&x| x == 2));
 }
 ```
 
-`Iterator::find` gives you a reference to the item. But if you want the _index_ of the
-item, use `Iterator::position`.
+`Iterator::find` te da una referencia al elemento. Pero si deseas el _índice_ del
+elemento, usa `Iterator::position`.
 
 ```rust,editable
 fn main() {
     let vec = vec![1, 9, 3, 3, 13, 2];
 
-    let index_of_first_even_number = vec.iter().position(|x| x % 2 == 0);
-    assert_eq!(index_of_first_even_number, Some(5));
+    let indice_del_primer_numero_par = vec.iter().position(|x| x % 2 == 0);
+    assert_eq!(indice_del_primer_numero_par, Some(5));
     
     
-    let index_of_first_negative_number = vec.iter().position(|x| x < &0);
-    assert_eq!(index_of_first_negative_number, None);
+    let indice_del_primer_numero_negativo = vec.iter().position(|x| x < &0);
+    assert_eq!(indice_del_primer_numero_negativo, None);
 }
 ```
 
-### See also:
+### Ve también:
 
 [`std::iter::Iterator::find`][find]
 

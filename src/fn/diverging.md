@@ -1,69 +1,74 @@
-# Diverging functions
+# Funciones divergentes
 
-Diverging functions never return. They are marked using `!`, which is an empty type.
+Las funciones divergentes nunca retornan. Están marcados con `!`, que es un
+tipo vacío.
 
 ```rust
 fn foo() -> ! {
-    panic!("This call never returns.");
+    panic!("Esta llamada nunca retorna.");
 }
 ```
 
-As opposed to all the other types, this one cannot be instantiated, because the
-set of all possible values this type can have is empty. Note that, it is
-different from the `()` type, which has exactly one possible value.
+A diferencia de todos los demás tipos, este no se puede instanciar, porque el
+conjunto de todos los valores posibles que puede tener este tipo está vacío.
+Ten en cuenta que es diferente del tipo `()`, que tiene exactamente un valor
+posible.
 
-For example, this function returns as usual, although there is no information
-in the return value.
+Por ejemplo, esta función retorna como de costumbre, aunque no hay información
+en el valor de retorno.
 
 ```rust
-fn some_fn() {
+fn alguna_fn() {
     ()
 }
 
 fn main() {
-    let a: () = some_fn();
-    println!("This function returns and you can see this line.")
+    let a: () = alguna_fn();
+    println!("Esta función retorna y puedes ver esta línea.")
 }
 ```
 
-As opposed to this function, which will never return the control back to the caller.
+A diferencia de esta función, que nunca devolverá el control a la persona que
+llama.
 
 ```rust,ignore
 #![feature(never_type)]
 
 fn main() {
-    let x: ! = panic!("This call never returns.");
-    println!("You will never see this line!");
+    let x: ! = panic!("Esta llamada nunca retorna.");
+    println!("¡Nunca verás esta línea!");
 }
 ```
 
-Although this might seem like an abstract concept, it is in fact very useful and
-often handy. The main advantage of this type is that it can be cast to any other
-one and therefore used at places where an exact type is required, for instance
-in `match` branches. This allows us to write code like this:
+Aunque esto pueda parecer un concepto abstracto, de hecho es muy útil y a
+menudo útil. La principal ventaja de este tipo es que se puede convertir a
+cualquier otro y, por lo tanto, se puede usar en lugares donde se requiere un
+tipo exacto, por ejemplo, en las ramas `match`. Esto nos permite escribir
+código como este:
 
 ```rust
 fn main() {
-    fn sum_odd_numbers(up_to: u32) -> u32 {
+    fn suma_numeros_impares(up_to: u32) -> u32 {
         let mut acc = 0;
         for i in 0..up_to {
-            // Notice that the return type of this match expression must be u32
-            // because of the type of the "addition" variable.
-            let addition: u32 = match i%2 == 1 {
-                // The "i" variable is of type u32, which is perfectly fine.
+            // Observa que el tipo de retorno de esta expresión coincidente debe
+            // ser u32 debido al tipo de variable "suma".
+            let adicion: u32 = match i%2 == 1 {
+                // La variable "i" es de tipo u32, lo que está perfectamente bien.
                 true => i,
-                // On the other hand, the "continue" expression does not return
-                // u32, but it is still fine, because it never returns and therefore
-                // does not violate the type requirements of the match expression.
+                // Por otro lado, la expresión "continue" no retorna u32, pero
+                // aún está bien, porque nunca retorna y por lo tanto no
+                // infringe los requisitos de tipo de la expresión coincidente.
                 false => continue,
             };
-            acc += addition;
+            acc += adicion;
         }
         acc
     }
-    println!("Sum of odd numbers up to 9 (excluding): {}", sum_odd_numbers(9));
+    println!("Suma de números impares hasta 9 (excluyente): {}", suma_numeros_impares(9));
 }
 ```
 
-It is also the return type of functions that loop forever (e.g. `loop {}`) like
-network servers or functions that terminates the process (e.g. `exit()`).
+También es el tipo de retorno de funciones que se repiten para siempre (por
+ejemplo, `loop {}`) como servidores de red o funciones que terminan el proceso
+(por ejemplo, `exit()`).

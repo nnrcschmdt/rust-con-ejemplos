@@ -1,50 +1,50 @@
-# Higher Order Functions
+# Funciones de orden superior
 
-Rust provides Higher Order Functions (HOF). These are functions that
-take one or more functions and/or produce a more useful function. HOFs
-and lazy iterators give Rust its functional flavor.
+Rust proporciona funciones de orden superior (HOF). Estas son funciones que
+toman una o más funciones y/o producen una función más útil. Funciones de orden
+superior y los iteradores perezosos le dan a Rust su sabor funcional.
 
 ```rust,editable
-fn is_odd(n: u32) -> bool {
+fn es_impar(n: u32) -> bool {
     n % 2 == 1
 }
 
 fn main() {
-    println!("Find the sum of all the squared odd numbers under 1000");
-    let upper = 1000;
+    println!("Encuentra la suma de los números impares al cuadrado por debajo de 1000");
+    let superior = 1000;
 
-    // Imperative approach
-    // Declare accumulator variable
+    // Enfoque imperativo
+    // Declarar variable acumuladora
     let mut acc = 0;
-    // Iterate: 0, 1, 2, ... to infinity
+    // Iterar: 0, 1, 2, ... hasta el infinito
     for n in 0.. {
-        // Square the number
-        let n_squared = n * n;
+        // Cuadrar el número
+        let n_cuadrado = n * n;
 
-        if n_squared >= upper {
-            // Break loop if exceeded the upper limit
+        if n_cuadrado >= superior {
+            // Romper el bucle si se supera el límite superior
             break;
-        } else if is_odd(n_squared) {
-            // Accumulate value, if it's odd
-            acc += n_squared;
+        } else if es_impar(n_cuadrado) {
+            // Acumular valor, si es impar
+            acc += n_cuadrado;
         }
     }
-    println!("imperative style: {}", acc);
+    println!("estilo imperativo: {}", acc);
 
-    // Functional approach
-    let sum_of_squared_odd_numbers: u32 =
-        (0..).map(|n| n * n)                             // All natural numbers squared
-             .take_while(|&n_squared| n_squared < upper) // Below upper limit
-             .filter(|&n_squared| is_odd(n_squared))     // That are odd
-             .fold(0, |acc, n_squared| acc + n_squared); // Sum them
-    println!("functional style: {}", sum_of_squared_odd_numbers);
+    // Enfoque funcional
+    let suma_de_numeros_impares_al_cuadrado: u32 =
+        (0..).map(|n| n * n)                         // Todos los números naturales al cuadrado
+             .take_while(|&n_cuadrado| n_cuadrado < superior) // Por debajo del límite superior
+             .filter(|&n_cuadrado| es_impar(n_cuadrado))      // Que son impares
+             .fold(0, |acc, n_cuadrado| acc + n_cuadrado);    // Sumados
+    println!("functional style: {}", suma_de_numeros_impares_al_cuadrado);
 }
 ```
 
 [Option][option]
-and
+e 
 [Iterator][iter]
-implement their fair share of HOFs.
+implementan su parte justa de funciones de orden superior
 
 [option]: https://doc.rust-lang.org/core/option/enum.Option.html
 [iter]: https://doc.rust-lang.org/core/iter/trait.Iterator.html

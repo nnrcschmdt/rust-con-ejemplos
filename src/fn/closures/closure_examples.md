@@ -1,3 +1,5 @@
-# Examples in `std`
+# Ejemplos en `std`
 
-This section contains a few examples of using closures from the `std` library.
+Esta sección contiene algunos ejemplos de uso de clausuras de la biblioteca
+`std`.
+

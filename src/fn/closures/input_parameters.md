@@ -1,45 +1,45 @@
-# As input parameters
+# Como parámetros de entrada
 
-While Rust chooses how to capture variables on the fly mostly without type
-annotation, this ambiguity is not allowed when writing functions. When
-taking a closure as an input parameter, the closure's complete type must be
-annotated using one of a few `traits`. In order of decreasing restriction,
-they are:
+Si bien Rust elige cómo capturar variables sobre la marcha principalmente sin
+anotaciones de tipo, esta ambigüedad no está permitida al escribir funciones.
+Cuando se toma una clausura como parámetro de entrada, el tipo completo de la
+clausura debe anotarse utilizando uno de los pocos `traits` (rasgos). En orden
+de restricción decreciente, son:
 
-* `Fn`: the closure captures by reference (`&T`)
-* `FnMut`: the closure captures by mutable reference (`&mut T`)
-* `FnOnce`: the closure captures by value (`T`)
+* `Fn`: la clausura captura por referencia (`& T`)
+* `FnMut`: la clausura captura por referencia mutable (`&mut T`)
+* `FnOnce`: la clausura captura por valor (`T`)
 
-On a variable-by-variable basis, the compiler will capture variables in the
-least restrictive manner possible.
+Variable por variable, el compilador capturará las variables de la manera menos
+restrictiva posible.
 
-For instance, consider a parameter annotated as `FnOnce`. This specifies
-that the closure *may* capture by `&T`, `&mut T`, or `T`, but the compiler
-will ultimately choose based on how the captured variables are used in the
-closure.
+Por ejemplo, considera un parámetro anotado como `FnOnce`. Esto especifica que
+la clausura *puede* ser capturada por `& T`, `&mut T` o `T`, pero el compilador
+elegirá en última instancia en función de cómo se utilizan las variables
+capturadas en la clausura.
 
-This is because if a move is possible, then any type of borrow should also
-be possible. Note that the reverse is not true. If the parameter is
-annotated as `Fn`, then capturing variables by `&mut T` or `T` are not
-allowed.
+Esto se debe a que si un movimiento es posible, entonces también debería ser
+posible cualquier tipo de préstamo. Ten en cuenta que lo contrario no es
+cierto.  Si el parámetro está anotado como `Fn`, no se permite la captura de
+variables con `&mut T` o `T`.
 
-In the following example, try swapping the usage of `Fn`, `FnMut`, and
-`FnOnce` to see what happens:
+En el siguiente ejemplo, intenta intercambiar el uso de `Fn`, `FnMut` y `FnOnce`
+para ver qué sucede:
 
 ```rust,editable
-// A function which takes a closure as an argument and calls it.
-// <F> denotes that F is a "Generic type parameter"
+// Una función que toma una clausura como argumento y la llama.
+// <F> denota que F es un "parámetro de tipo genérico"
 fn apply<F>(f: F) where
-    // The closure takes no input and returns nothing.
+    // La clausura no tiene entrada y no devuelve nada.
     F: FnOnce() {
-    // ^ TODO: Try changing this to `Fn` or `FnMut`.
+    // ^ TODO: Intenta cambiar esto a `Fn` o `FnMut`.
 
     f();
 }
 
-// A function which takes a closure and returns an `i32`.
+// Una función que toma una clausura y devuelve un `i32`.
 fn apply_to_3<F>(f: F) -> i32 where
-    // The closure takes an `i32` and returns an `i32`.
+    // La clausura toma un `i32` y devuelve un `i32`.
     F: Fn(i32) -> i32 {
 
     f(3)
@@ -48,41 +48,42 @@ fn apply_to_3<F>(f: F) -> i32 where
 fn main() {
     use std::mem;
 
-    let greeting = "hello";
-    // A non-copy type.
-    // `to_owned` creates owned data from borrowed one
-    let mut farewell = "goodbye".to_owned();
+    let saludo = "hola";
+    // Un tipo sin copia.
+    // `to_owned` crea datos propios de los prestados
+    let mut despedida = "adios".to_owned();
 
-    // Capture 2 variables: `greeting` by reference and
-    // `farewell` by value.
-    let diary = || {
-        // `greeting` is by reference: requires `Fn`.
-        println!("I said {}.", greeting);
+    // Captura 2 variables: `saludo` por referencia y
+    // `despedida` por valor.
+    let diario = || {
+        // `saludo` es por referencia: requiere `Fn`.
+        println!("Dije {}.", saludo);
 
-        // Mutation forces `farewell` to be captured by
-        // mutable reference. Now requires `FnMut`.
-        farewell.push_str("!!!");
-        println!("Then I screamed {}.", farewell);
-        println!("Now I can sleep. zzzzz");
+        // La mutación obliga que `despedida` sea capturada por
+        // referencia mutable. Ahora requiere `FnMut`.
+        despedida.push_str("!!!");
+        println!("Y luego grité {}.", despedida);
+        println!("Ahora puedo dormir. zzzzz");
 
-        // Manually calling drop forces `farewell` to
-        // be captured by value. Now requires `FnOnce`.
-        mem::drop(farewell);
+        // Llamar manualmente drop obliga a `despedida` a
+        // ser capturada por valor. Ahora requiere `FnOnce`.
+        mem::drop(despedida);
     };
 
-    // Call the function which applies the closure.
-    apply(diary);
+    // Llame a la función que aplica la clausura.
+    apply(diario);
 
-    // `double` satisfies `apply_to_3`'s trait bound
-    let double = |x| 2 * x;
+    // `double` satisface el límite del rasgo de `apply_to_3`
+    let doble = |x| 2 * x;
 
-    println!("3 doubled: {}", apply_to_3(double));
+    println!("3 duplicado: {}", apply_to_3(doble));
 }
 ```
 
-### See also:
+### Ve también:
 
-[`std::mem::drop`][drop], [`Fn`][fn], [`FnMut`][fnmut], [Generics][generics], [where][where] and [`FnOnce`][fnonce]
+[`std::mem::drop`][drop], [`Fn`][fn], [`FnMut`][fnmut]
+<!--, [Generics][generics], [where][where] and [`FnOnce`][fnonce] -->
 
 [drop]: https://doc.rust-lang.org/std/mem/fn.drop.html
 [fn]: https://doc.rust-lang.org/std/ops/trait.Fn.html

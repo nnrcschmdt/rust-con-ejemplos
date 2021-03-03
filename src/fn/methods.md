@@ -1,59 +1,61 @@
-# Methods
+# Métodos
 
-Methods are functions attached to objects. These methods have access to the
-data of the object and its other methods via the `self` keyword. Methods are
-defined under an `impl` block.
+Los métodos son funciones adjuntas a objetos. Estos métodos tienen acceso a los
+datos del objeto y sus otros métodos a través de la palabra clave `self`. Los
+métodos se definen en un bloque `impl`.
 
 ```rust,editable
-struct Point {
+struct Punto {
     x: f64,
     y: f64,
 }
 
-// Implementation block, all `Point` methods go in here
-impl Point {
-    // This is a static method
+// Bloque de implementación, todos los métodos de `Punto` van aquí
+impl Punto {
+    // Este es un método estático
+    // Los métodos estáticos no necesitan ser llamados por una instancia
+    // Estos métodos se utilizan generalmente como constructores
     // Static methods don't need to be called by an instance
-    // These methods are generally used as constructors
-    fn origin() -> Point {
-        Point { x: 0.0, y: 0.0 }
+    fn origen() -> Punto {
+        Punto { x: 0.0, y: 0.0 }
     }
 
-    // Another static method, taking two arguments:
-    fn new(x: f64, y: f64) -> Point {
-        Point { x: x, y: y }
+    // Otro método estático, que toma dos argumentos:
+    fn new(x: f64, y: f64) -> Punto {
+        Punto { x: x, y: y }
     }
 }
 
-struct Rectangle {
-    p1: Point,
-    p2: Point,
+struct Rectangulo {
+    p1: Punto,
+    p2: Punto,
 }
 
-impl Rectangle {
-    // This is an instance method
-    // `&self` is sugar for `self: &Self`, where `Self` is the type of the
-    // caller object. In this case `Self` = `Rectangle`
+impl Rectangulo {
+    // Este es un método de instancia
+    // `&self` es azúcar sintáctica para `self: &Self`, donde `Self` es el tipo
+    // del objeto llamador. En este caso, `Self` = `Rectangulo`
     fn area(&self) -> f64 {
-        // `self` gives access to the struct fields via the dot operator
-        let Point { x: x1, y: y1 } = self.p1;
-        let Point { x: x2, y: y2 } = self.p2;
+        // `self` da acceso a los campos de la estructura a través del operador
+        // de punto
+        let Punto { x: x1, y: y1 } = self.p1;
+        let Punto { x: x2, y: y2 } = self.p2;
 
-        // `abs` is a `f64` method that returns the absolute value of the
-        // caller
+        // `abs` es un método de `f64` que devuelve el valor absoluto del
+        // objeto llamador
         ((x1 - x2) * (y1 - y2)).abs()
     }
 
-    fn perimeter(&self) -> f64 {
-        let Point { x: x1, y: y1 } = self.p1;
-        let Point { x: x2, y: y2 } = self.p2;
+    fn perimetro(&self) -> f64 {
+        let Punto { x: x1, y: y1 } = self.p1;
+        let Punto { x: x2, y: y2 } = self.p2;
 
         2.0 * ((x1 - x2).abs() + (y1 - y2).abs())
     }
 
-    // This method requires the caller object to be mutable
-    // `&mut self` desugars to `self: &mut Self`
-    fn translate(&mut self, x: f64, y: f64) {
+    // Este método requiere que el objeto de la llamada sea mutable
+    // `&mut self` es azúcar sintáctica para `self: &mut Self`
+    fn trasldar(&mut self, x: f64, y: f64) {
         self.p1.x += x;
         self.p2.x += x;
 
@@ -62,54 +64,54 @@ impl Rectangle {
     }
 }
 
-// `Pair` owns resources: two heap allocated integers
-struct Pair(Box<i32>, Box<i32>);
+// `Par` posee recursos: dos enteros asignados al montículo
+struct Par(Box<i32>, Box<i32>);
 
-impl Pair {
-    // This method "consumes" the resources of the caller object
-    // `self` desugars to `self: Self`
-    fn destroy(self) {
-        // Destructure `self`
-        let Pair(first, second) = self;
+impl Par {
+    // Este método "consume" los recursos del objeto llamador
+    // `self` es azúcar sintáctica para `self: Self`
+    fn destruir(self) {
+        // Desestructurar `self`
+        let Par(primero, segundo) = self;
 
-        println!("Destroying Pair({}, {})", first, second);
+        println!("Destuyendo Par({}, {})", primero, segundo);
 
-        // `first` and `second` go out of scope and get freed
+        // `primero` y `segundo` salen del alcance y se liberan
     }
 }
 
 fn main() {
-    let rectangle = Rectangle {
-        // Static methods are called using double colons
-        p1: Point::origin(),
-        p2: Point::new(3.0, 4.0),
+    let rectangulo = Rectangulo {
+        // Los métodos estáticos se llaman con dos puntos dobles
+        p1: Punto::origen(),
+        p2: Punto::new(3.0, 4.0),
     };
 
-    // Instance methods are called using the dot operator
-    // Note that the first argument `&self` is implicitly passed, i.e.
-    // `rectangle.perimeter()` === `Rectangle::perimeter(&rectangle)`
-    println!("Rectangle perimeter: {}", rectangle.perimeter());
-    println!("Rectangle area: {}", rectangle.area());
+    // Los métodos de instancia se llaman usando el operador de punto
+    // Ten en cuenta que el primer argumento `& self` se pasa implícitamente,
+    // es decir, `rectangulo.perimetro()` === `Rectangulo::perimetro(&rectangulo)`
+    println!("Rectangulo perimetro: {}", rectangulo.perimetro());
+    println!("Rectangulo area: {}", rectangulo.area());
 
-    let mut square = Rectangle {
-        p1: Point::origin(),
-        p2: Point::new(1.0, 1.0),
+    let mut cuadrado = Rectangulo {
+        p1: Punto::origen(),
+        p2: Punto::new(1.0, 1.0),
     };
 
-    // Error! `rectangle` is immutable, but this method requires a mutable
-    // object
-    //rectangle.translate(1.0, 0.0);
-    // TODO ^ Try uncommenting this line
+    // ¡Error! `rectangulo` es inmutable, pero este método requiere un objeto
+    // mutable
+    //rectangulo.trasldar(1.0, 0.0);
+    // TODO ^ Intenta descomentar esta línea
 
-    // Okay! Mutable objects can call mutable methods
-    square.translate(1.0, 1.0);
+    // ¡Okey! Los objetos mutables pueden llamar a métodos mutables
+    cuadrado.trasldar(1.0, 1.0);
 
-    let pair = Pair(Box::new(1), Box::new(2));
+    let par = Par(Box::new(1), Box::new(2));
 
-    pair.destroy();
+    par.destruir();
 
-    // Error! Previous `destroy` call "consumed" `pair`
-    //pair.destroy();
-    // TODO ^ Try uncommenting this line
+    // ¡Error! La llamda `destruir` anterior "consumió" `par`
+    //par.destruir();
+    // TODO ^ Intenta descomentar esta línea
 }
 ```

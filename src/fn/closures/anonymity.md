@@ -1,33 +1,33 @@
-# Type anonymity
+# Anonimato de tipo
 
-Closures succinctly capture variables from enclosing scopes. Does this have
-any consequences? It surely does. Observe how using a closure as a function
-parameter requires [generics], which is necessary because of how they are
-defined:
+Las clausuras capturan de forma sucinta las variables de los ámbitos adjuntos. 
+¿Tiene esto alguna consecuencia? Seguramente lo hace. Observa cómo el uso de
+una clausura como parámetro de función requiere `genéricos`, lo cual es
+necesario debido a cómo se definen:
 
 ```rust
-// `F` must be generic.
+// `F` debe ser genérico
 fn apply<F>(f: F) where
     F: FnOnce() {
     f();
 }
 ```
 
-When a closure is defined, the compiler implicitly creates a new
-anonymous structure to store the captured variables inside, meanwhile
-implementing the functionality via one of the `traits`: `Fn`, `FnMut`, or
-`FnOnce` for this unknown type. This type is assigned to the variable which
-is stored until calling.
+Cuando se define una clausura, el compilador crea implícitamente una nueva
+estructura anónima para almacenar las variables capturadas en el interior,
+mientras tanto implementa la funcionalidad a través de uno de los `rasgos`:
+`Fn`, `FnMut` o `FnOnce` para este tipo desconocido. Este tipo se asigna a la
+variable que se almacena hasta la llamada.
 
-Since this new type is of unknown type, any usage in a function will require
-generics. However, an unbounded type parameter `<T>` would still be ambiguous
-and not be allowed. Thus, bounding by one of the `traits`: `Fn`, `FnMut`, or
-`FnOnce` (which it implements) is sufficient to specify its type.
+Dado que este nuevo tipo es de tipo desconocido, cualquier uso en una función
+requerirá genéricos. Sin embargo, un parámetro de tipo ilimitado `<T>` aún
+sería ambiguo y no estaría permitido. Por lo tanto, limitarse a uno de los
+`rasgos`:` Fn`, `FnMut` o `FnOnce` (que implementa) es suficiente para
+especificar su tipo.
 
 ```rust,editable
-// `F` must implement `Fn` for a closure which takes no
-// inputs and returns nothing - exactly what is required
-// for `print`.
+// `F` debe implementar `Fn` para una clausura que no requiere entradas y no
+// devuelve nada, exactamente lo que se requiere para `imprimir`.
 fn apply<F>(f: F) where
     F: Fn() {
     f();
@@ -36,17 +36,17 @@ fn apply<F>(f: F) where
 fn main() {
     let x = 7;
 
-    // Capture `x` into an anonymous type and implement
-    // `Fn` for it. Store it in `print`.
-    let print = || println!("{}", x);
+    // Captura `x` en un tipo anónimo e implementa `Fn` para ello.
+    // Guárdalo en `imprimir`.
+    let imprimir = || println!("{}", x);
 
-    apply(print);
+    apply(imprimir);
 }
 ```
 
-### See also:
+### Ve también:
 
-[A thorough analysis][thorough_analysis], [`Fn`][fn], [`FnMut`][fn_mut],
+[Un análisis completo][thorough_analysis], [`Fn`][fn], [`FnMut`][fn_mut],
 and [`FnOnce`][fn_once]
 
 [generics]: ../../generics.md

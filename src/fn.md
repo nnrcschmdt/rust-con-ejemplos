@@ -1,48 +1,52 @@
-# Functions
+# Funciones
 
-Functions are declared using the `fn` keyword. Its arguments are type
-annotated, just like variables, and, if the function returns a value, the
-return type must be specified after an arrow `->`.
+Las funciones se declaran utilizando la palabra clave `fn`. Sus argumentos
+tienen anotaciones de tipo, al igual que las variables, y, si la función
+devuelve un valor, el tipo de retorno debe especificarse después de una flecha
+`->`.
 
-The final expression in the function will be used as return value.
-Alternatively, the `return` statement can be used to return a value earlier
-from within the function, even from inside loops or `if` statements.
+La expresión final de la función se utilizará como valor de retorno.
+Alternativamente, la declaración `return` puede usarse para devolver un valor
+anterior desde dentro de la función, incluso desde dentro de bucles o
+declaraciones` if`.
 
-Let's rewrite FizzBuzz using functions!
+¡Reescribamos FizzBuzz usando funciones!
 
 ```rust,editable
-// Unlike C/C++, there's no restriction on the order of function definitions
+// A diferencia de C/C++, no hay restricciones en el orden de las definiciones
+// de funciones
 fn main() {
-    // We can use this function here, and define it somewhere later
+    // Podemos usar esta función aquí y definirla en algún lugar más adelante.
     fizzbuzz_to(100);
 }
 
-// Function that returns a boolean value
-fn is_divisible_by(lhs: u32, rhs: u32) -> bool {
-    // Corner case, early return
+// Función que devuelve un valor booleano
+fn es_divisible_por(lhs: u32, rhs: u32) -> bool {
+    // Caso patológico, devolución anticipada
     if rhs == 0 {
         return false;
     }
 
-    // This is an expression, the `return` keyword is not necessary here
+    // Esta es una expresión, la palabra clave `return` no es necesaria aquí
     lhs % rhs == 0
 }
 
-// Functions that "don't" return a value, actually return the unit type `()`
+// Las funciones que "no" devuelven un valor, en realidad devuelven el tipo de
+// unidad `()`
 fn fizzbuzz(n: u32) -> () {
-    if is_divisible_by(n, 15) {
+    if es_divisible_por(n, 15) {
         println!("fizzbuzz");
-    } else if is_divisible_by(n, 3) {
+    } else if es_divisible_por(n, 3) {
         println!("fizz");
-    } else if is_divisible_by(n, 5) {
+    } else if es_divisible_por(n, 5) {
         println!("buzz");
     } else {
         println!("{}", n);
     }
 }
 
-// When a function returns `()`, the return type can be omitted from the
-// signature
+// Cuando una función devuelve `()`, el tipo de retorno se puede omitir de la
+// firma
 fn fizzbuzz_to(n: u32) {
     for n in 1..n + 1 {
         fizzbuzz(n);

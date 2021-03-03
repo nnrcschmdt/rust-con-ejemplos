@@ -1,115 +1,118 @@
-# Capturing
+# Capturar
 
-Closures are inherently flexible and will do what the functionality requires
-to make the closure work without annotation. This allows capturing to
-flexibly adapt to the use case, sometimes moving and sometimes borrowing.
-Closures can capture variables:
+Las clausuras son inherentemente flexibles y harán lo que la funcionalidad
+requiera para que la clausura funcione sin anotaciones. Esto permite que la
+captura se adapte de manera flexible al caso de uso, a veces moviéndose y a
+veces tomando prestado. Las clausuras pueden capturar variables:
 
-* by reference: `&T`
-* by mutable reference: `&mut T`
-* by value: `T`
+* por referencia: `&T`
+* por referencia mutable: `&mut T`
+* por valor: `T`
 
-They preferentially capture variables by reference and only go lower when
-required.
+Preferiblemente capturan variables por referencia y solo descienden cuando es
+necesario.
 
 ```rust,editable
 fn main() {
     use std::mem;
     
-    let color = String::from("green");
+    let color = String::from("verde");
 
-    // A closure to print `color` which immediately borrows (`&`) `color` and
-    // stores the borrow and closure in the `print` variable. It will remain
-    // borrowed until `print` is used the last time. 
+    // Una clausura para imprimir `color` que inmediatamente toma prestado (`&`)
+    // a `color` y almacena el préstamo y la clausura en la variable `print`.
+    // Permanecerá prestado hasta que se use `print` por última vez.
     //
-    // `println!` only requires arguments by immutable reference so it doesn't
-    // impose anything more restrictive.
+    // `println!` solo requiere argumentos por referencia inmutable por lo que
+    // no impone algo más restrictivo
     let print = || println!("`color`: {}", color);
 
-    // Call the closure using the borrow.
+    // Llama a la clausura usando el préstamo.
     print();
 
-    // `color` can be borrowed immutably again, because the closure only holds
-    // an immutable reference to `color`. 
-    let _reborrow = &color;
+    // `color` se puede tomar prestado inmutablemente de nuevo, porque la
+    // clausura solo mantiene una referencia inmutable a `color`.
+    let _prestado_nuevamente = &color;
     print();
 
-    // A move or reborrow is allowed after the final use of `print`
-    let _color_moved = color;
+    // Se permite un movimiento o cambio después del uso final de `print`
+    let _color_movido = color;
 
 
-    let mut count = 0;
-    // A closure to increment `count` could take either `&mut count` or `count`
-    // but `&mut count` is less restrictive so it takes that. Immediately
-    // borrows `count`.
+    let mut contador = 0;
+    // Una clausura para incrementar `contador` podría tomar `&mut contador` o
+    // `contador` pero `&mut contador` es menos restrictivo por lo que toma eso.
+    // Inmediatamente toma prestado `contador`.
     //
-    // A `mut` is required on `inc` because a `&mut` is stored inside. Thus,
-    // calling the closure mutates the closure which requires a `mut`.
+    // Se requiere un `mut` en `inc` porque un `&mut` está almacenado dentro.
+    // Por lo tanto, llamar a la clausura muta el cierre que requiere un `mut`.
     let mut inc = || {
-        count += 1;
-        println!("`count`: {}", count);
+        contador += 1;
+        println!("`contador`: {}", contador);
     };
 
-    // Call the closure using a mutable borrow.
+    // Llama a la clausura usando un préstamo mutable.
     inc();
 
-    // The closure still mutably borrows `count` because it is called later.
-    // An attempt to reborrow will lead to an error.
-    // let _reborrow = &count; 
-    // ^ TODO: try uncommenting this line.
+    // La clausura todavía toma prestado `contador` de forma mutante porque se
+    // llama más tarde.
+    // Un intento de tomar prestado nuevamente dará lugar a un error.
+    // let _prestado_nuevamente = &contador;
+    // ^ TODO: intenta descomentar esta línea.
     inc();
 
-    // The closure no longer needs to borrow `&mut count`. Therefore, it is
-    // possible to reborrow without an error
-    let _count_reborrowed = &mut count; 
+    // La clausura ya no necesita pedir prestado `&mut contador`. Por lo tanto,
+    // es posible pedir prestado nuevamente sin error
+    let _contador_prestado_nuevamente = &mut contador; 
 
     
-    // A non-copy type.
-    let movable = Box::new(3);
+    // Un tipo sin copia.
+    let movible = Box::new(3);
 
-    // `mem::drop` requires `T` so this must take by value. A copy type
-    // would copy into the closure leaving the original untouched.
-    // A non-copy must move and so `movable` immediately moves into
-    // the closure.
+    // `mem::drop` requiere `T` por lo que debe tomarse por valor. Un tipo de
+    // copia copiaría en la clausura dejando el original intacto.
+    // Una no copia debe moverse y, por lo tanto, `movible` se mueve
+    // inmediatamente a la clausura.
     let consume = || {
-        println!("`movable`: {:?}", movable);
-        mem::drop(movable);
+        println!("`movible`: {:?}", movible);
+        mem::drop(movible);
     };
 
-    // `consume` consumes the variable so this can only be called once.
+    // `consume` consume la variable, por lo que solo se puede llamar una vez.
     consume();
     // consume();
-    // ^ TODO: Try uncommenting this line.
+    // ^ TODO: Intenta descomentar esta línea.
 }
 ```
 
-Using `move` before vertical pipes forces closure
-to take ownership of captured variables:
+El uso de `move` antes de las barras verticales obliga a la clausura a tomar
+posesión de las variables capturadas:
 
 ```rust,editable
 fn main() {
-    // `Vec` has non-copy semantics.
-    let haystack = vec![1, 2, 3];
+    // `Vec` tiene semántica sin copia.
+    let pajar = vec![1, 2, 3];
 
-    let contains = move |needle| haystack.contains(needle);
+    let contiene = move |aguja| pajar.contains(aguja);
 
-    println!("{}", contains(&1));
-    println!("{}", contains(&4));
+    println!("{}", contiene(&1));
+    println!("{}", contiene(&4));
 
-    // println!("There're {} elements in vec", haystack.len());
-    // ^ Uncommenting above line will result in compile-time error
-    // because borrow checker doesn't allow re-using variable after it
-    // has been moved.
+    // println!("Hay {} elementos en vec", pajar.len());
+    // ^ Descomentar la línea anterior resultará en un error en tiempo de
+    // compilación porque el verificador de préstamo no permite reutilizar la
+    // variable después de que ella ha sido movida.
     
-    // Removing `move` from closure's signature will cause closure
-    // to borrow _haystack_ variable immutably, hence _haystack_ is still
-    // available and uncommenting above line will not cause an error.
+    // Eliminar `move` de la firma de la clausura provocará que la clausura
+    // tome prestada la variable _pajar_ inmutablemente, por lo tanto, _pajar_
+    // sigue estando disponible y descomentar la línea anterior no provocará un
+    // error.
 }
 ```
 
-### See also:
+### Ve también:
 
-[`Box`][box] and [`std::mem::drop`][drop]
+<!-- [`Box`][box] y -->
+[`std::mem::drop`][drop]
 
 [box]: ../../std/box.md
 [drop]: https://doc.rust-lang.org/std/mem/fn.drop.html

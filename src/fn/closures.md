@@ -1,44 +1,45 @@
-# Closures
+# Clausuras
 
-Closures are functions that can capture the enclosing environment. For
-example, a closure that captures the x variable:
+Las clausura son funciones que pueden capturar el entorno circundante. Por
+ejemplo, una clausura que captura la variable x:
 
 ```Rust
 |val| val + x
 ```
 
-The syntax and capabilities of closures make them very convenient for
-on the fly usage. Calling a closure is exactly like calling a function.
-However, both input and return types *can* be inferred and input
-variable names *must* be specified.
+La sintaxis y las capacidades de las clausuras las hacen muy convenientes para
+su uso sobre la marcha. Llamar a una clausura es exactamente como llamar a una
+función. Sin embargo, tanto los tipos de entrada como los de retorno *pueden*
+inferirse y los nombres de las variables de entrada *deben* especificarse.
 
-Other characteristics of closures include:
-* using `||` instead of `()` around input variables.
-* optional body delimination (`{}`) for a single expression (mandatory otherwise).
-* the ability to capture the outer environment variables.
+Otras características de las clausuras incluyen:
+* usar `||` en lugar de `()` alrededor de las variables de entrada.
+* delimitación opcional de cuerpo (`{}`) para una sola expresión (obligatoria
+  en caso contrario).
+* la capacidad de capturar las variables del entorno exteriores.
 
 ```rust,editable
 fn main() {
-    // Increment via closures and functions.
-    fn function(i: i32) -> i32 { i + 1 }
+    // Incremento mediante clausuras y funciones.
+    fn funcion(i: i32) -> i32 { i + 1 }
 
-    // Closures are anonymous, here we are binding them to references
-    // Annotation is identical to function annotation but is optional
-    // as are the `{}` wrapping the body. These nameless functions
-    // are assigned to appropriately named variables.
-    let closure_annotated = |i: i32| -> i32 { i + 1 };
-    let closure_inferred  = |i     |          i + 1  ;
+    // Las clausura son anónimas, aquí los vinculamos a referencias
+    // La anotación es idéntica a la anotación de función pero es opcional
+    // como son los `{}` envolviendo el cuerpo. Estas funciones sin nombre
+    // se asignan a variables con nombres adecuados.
+    let clausura_annotada = |i: i32| -> i32 { i + 1 };
+    let clausura_inferida = |i     |          i + 1  ;
 
     let i = 1;
-    // Call the function and closures.
-    println!("function: {}", function(i));
-    println!("closure_annotated: {}", closure_annotated(i));
-    println!("closure_inferred: {}", closure_inferred(i));
+    // Llame a la función y las clausuras
+    println!("función: {}", funcion(i));
+    println!("clausura_annotada: {}", clausura_annotada(i));
+    println!("clausura_inferida: {}", clausura_inferida(i));
 
-    // A closure taking no arguments which returns an `i32`.
-    // The return type is inferred.
-    let one = || 1;
-    println!("closure returning one: {}", one());
+    // Una clausura sin argumentos que devuelve un `i32`.
+    // El tipo de retorno es inferido.
+    let uno = || 1;
+    println!("clausura que devuelve uno {}", uno());
 
 }
 ```

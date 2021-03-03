@@ -60,3 +60,18 @@
     - [if let](flow_control/if_let.md)
     - [while let](flow_control/while_let.md)
 
+- [Funciones](fn.md)
+    - [Métodos](fn/methods.md)
+    - [Clausuras](fn/closures.md)
+        - [Capturar](fn/closures/capture.md)
+        - [Como parámetros de entrada](fn/closures/input_parameters.md)
+        - [Anonimato de tipo](fn/closures/anonymity.md)
+        - [Funciones de entrada](fn/closures/input_functions.md)
+        - [Como parámetros de salida](fn/closures/output_parameters.md)
+        - [Ejemplos en `std`](fn/closures/closure_examples.md)
+            - [Iterator::any](fn/closures/closure_examples/iter_any.md)
+            - [Buscar a través de iteradores](fn/closures/closure_examples/iter_find.md)
+    - [Funciones de orden superior](fn/hof.md)
+    - [Funciones divergentes](fn/diverging.md)
+
+

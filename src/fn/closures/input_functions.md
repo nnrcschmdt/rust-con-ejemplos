@@ -1,37 +1,38 @@
-# Input functions
+# Funciones de entrada
 
-Since closures may be used as arguments, you might wonder if the same can be said
-about functions. And indeed they can! If you declare a function that takes a
-closure as parameter, then any function that satisfies the trait bound of that
-closure can be passed as a parameter.
+Dado que las clausuras pueden usarse como argumentos, es posible que tes
+preguntes si se puede decir lo mismo de las funciones. ¡Y de hecho pueden! Si
+declaras una función que toma una clausura como parámetro, entonces cualquier
+función que satisfaga el límite de rasgo de esa clausura se puede pasar como
+parámetro.
 
 ```rust,editable
-// Define a function which takes a generic `F` argument
-// bounded by `Fn`, and calls it
-fn call_me<F: Fn()>(f: F) {
+// Define una función que tome un argumento `F` genérico delimitado por `Fn`,
+// y lo llama
+fn llamame<F: Fn()>(f: F) {
     f();
 }
 
-// Define a wrapper function satisfying the `Fn` bound
-fn function() {
-    println!("I'm a function!");
+// Define una función contenedora que satisfaga el límite `Fn`
+fn funcion() {
+    println!("¡Soy una función!");
 }
 
 fn main() {
-    // Define a closure satisfying the `Fn` bound
-    let closure = || println!("I'm a closure!");
+    // Define una clausura que satisfaga el límite `Fn`
+    let clausura = || println!("¡Soy una clausura!");
 
-    call_me(closure);
-    call_me(function);
+    llamame(clausura);
+    llamame(funcion);
 }
 ```
 
-As an additional note, the `Fn`, `FnMut`, and `FnOnce` `traits` dictate how
-a closure captures variables from the enclosing scope.
+Como nota adicional, los rasgos `Fn`, `FnMut` y `FnOnce` dictan cómo una
+clausura captura las variables del alcance adjunto.
 
-### See also:
+### Ve también:
 
-[`Fn`][fn], [`FnMut`][fn_mut], and [`FnOnce`][fn_once]
+[`Fn`][fn], [`FnMut`][fn_mut], y [`FnOnce`][fn_once]
 
 [fn]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [fn_mut]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
