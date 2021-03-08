@@ -1,7 +1,7 @@
 # Mutabilidad
 
-Los enlaces de variables son inmutables por defecto, pero esto se puede anular
-usando el modificador `mut`.
+Los enlaces de variables son inmutables de manera predeterminada, pero esto se
+puede anular usando el modificador `mut`.
 
 ```rust,editable,ignore,mdbook-runnable
 fn main() {

@@ -50,9 +50,9 @@ fn main() {
 
 La construcción `for in` puede interactuar con un `Iterator` de varias formas.
 Como se discutió en la sección sobre el rasgo <!--[Iterator][iter],-->
-`Iterator`, por defecto el bucle `for` aplicará la función `into_iter` a la
-colección. Sin embargo, este no es el único medio de convertir colecciones en
-iteradores.
+`Iterator`, de forma predeterminada el bucle `for` aplicará la función
+`into_iter` a la colección. Sin embargo, este no es el único medio de convertir
+colecciones en iteradores.
 
 `into_iter`, `iter` e `iter_mut` manejan la conversión de una colección en un
 iterador de diferentes maneras, proporcionando diferentes vistas de los datos
