@@ -2,7 +2,7 @@
 
 Un vector es una colección de objetos del mismo tipo `T`, almacenados en una
 memoria contigua. Los vectores se crean usando corchetes `[]`, y su longitud,
-que se conoce en tiempo de compilación, es parte de su firma de tipo
+que se conoce en tiempo de compilación, es parte de su signatura de tipo
 `[T; longitud]`.
 
 Los segmentos son similares a las matrices, pero su longitud no se conoce en el
@@ -11,7 +11,7 @@ la primera palabra es un puntero a los datos y la segunda palabra es la
 longitud del segmento. El tamaño de la palabra es el mismo de usize,
 determinado por la arquitectura del procesador, por ejemplo, 64 bits en un
 x86-64. Los segmentos se pueden usar para tomar prestada una sección de un
-vector y tienen la firma de tipo `&[T]`.
+vector y tienen la signatura de tipo `&[T]`.
 
 ```rust,editable,ignore,mdbook-runnable
 use std::mem;
@@ -23,7 +23,7 @@ fn analiza_segmento(segmento: &[i32]) {
 }
 
 fn main() {
-    // Vector de tamaño fijo (la firma del tipo es superflua)
+    // Vector de tamaño fijo (la signatura del tipo es superflua)
     let xs: [i32; 5] = [1, 2, 3, 4, 5];
 
     // Todos los elementos se pueden inicializar con el mismo valor

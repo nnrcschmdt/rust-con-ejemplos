@@ -1,7 +1,7 @@
 # Tuplas
 
 Una tupla es una colección de valores de diferentes tipos. Las tuplas se
-construyen usando paréntesis `()`, y cada tupla en sí es un valor con firma de
+construyen usando paréntesis `()`, y cada tupla en sí es un valor con signatura de
 tipo `(T1, T2, ...)`, donde `T1`,`T2` son los tipos de sus miembros. Las
 funciones pueden usar tuplas para devolver múltiples valores, ya que las tuplas
 pueden contener cualquier número de valores.

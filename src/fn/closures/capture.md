@@ -102,7 +102,7 @@ fn main() {
     // compilación porque el verificador de préstamo no permite reutilizar la
     // variable después de que ella ha sido movida.
     
-    // Eliminar `move` de la firma de la clausura provocará que la clausura
+    // Eliminar `move` de la signatura de la clausura provocará que la clausura
     // tome prestada la variable _pajar_ inmutablemente, por lo tanto, _pajar_
     // sigue estando disponible y descomentar la línea anterior no provocará un
     // error.

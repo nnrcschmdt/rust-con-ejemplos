@@ -16,7 +16,7 @@ struct Estructura(i32);
 // Para usar el marcador `{}`, se debe implementar el rasgo `fmt::Display`
 // manualmente para el tipo.
 impl fmt::Display for Estructura {
-    // Este rasgo requiere `fmt` con esta firma exacta.
+    // Este rasgo requiere `fmt` con esta signatura exacta.
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         // Escribe estrictamente el primer elemento en la secuencia de salida
         // proporcionada: `f`. Devuelve `fmt::Result` que indica si la

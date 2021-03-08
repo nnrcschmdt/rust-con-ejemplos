@@ -2,7 +2,7 @@
 
 `Iterator::any` es una función que, cuando se le pasa un iterador, devolverá
 `true` si algún elemento satisface el predicado. De lo contrario, `false`. Su
-firma:
+signatura:
 
 ```rust,ignore
 pub trait Iterator {

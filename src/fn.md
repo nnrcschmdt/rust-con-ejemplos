@@ -46,7 +46,7 @@ fn fizzbuzz(n: u32) -> () {
 }
 
 // Cuando una función devuelve `()`, el tipo de retorno se puede omitir de la
-// firma
+// signatura
 fn fizzbuzz_to(n: u32) {
     for n in 1..n + 1 {
         fizzbuzz(n);

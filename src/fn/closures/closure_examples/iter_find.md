@@ -2,7 +2,7 @@
 
 `Iterator::find` es una función que itera sobre un iterador y busca el primer
 valor que satisface alguna condición. Si ninguno de los valores satisface la
-condición, devuelve `None`. Su firma:
+condición, devuelve `None`. Su signatura:
 
 ```rust,ignore
 pub trait Iterator {
