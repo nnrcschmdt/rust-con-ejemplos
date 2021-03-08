@@ -1,8 +1,9 @@
-# Modules
+# Módulos
 
-Rust provides a powerful module system that can be used to hierarchically split
-code in logical units (modules), and manage visibility (public/private) between
-them.
+Rust proporciona un potente sistema de módulos que se puede utilizar para
+dividir jerárquicamente el código en unidades lógicas (módulos) y administrar
+la visibilidad (pública/privada) entre ellos.
 
-A module is a collection of items: functions, structs, traits, `impl` blocks,
-and even other modules.
+Un módulo es una colección de elementos: funciones, estructuras, rasgos,
+bloques `impl` e incluso otros módulos.
+

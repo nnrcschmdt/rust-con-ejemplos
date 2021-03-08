@@ -1,56 +1,58 @@
-# `super` and `self`
+# `super` y `self`
 
-The `super` and `self` keywords can be used in the path to remove ambiguity
-when accessing items and to prevent unnecessary hardcoding of paths.
+Las palabras clave `super` y `self` se pueden utilizar en la ruta para eliminar
+la ambigüedad al acceder a los elementos y evitar la codificación innecesaria
+de las rutas.
 
 ```rust,editable
-fn function() {
-    println!("called `function()`");
+fn funcion() {
+    println!("`funcion()` llamada");
 }
 
-mod cool {
-    pub fn function() {
-        println!("called `cool::function()`");
+mod genial {
+    pub fn funcion() {
+        println!("`genial::funcion()` llamada");
     }
 }
 
-mod my {
-    fn function() {
-        println!("called `my::function()`");
+mod mi {
+    fn funcion() {
+        println!("`mi::funcion()` llamada");
     }
     
-    mod cool {
-        pub fn function() {
-            println!("called `my::cool::function()`");
+    mod genial {
+        pub fn funcion() {
+            println!("`mi::genial::funcion()` llamada");
         }
     }
     
-    pub fn indirect_call() {
-        // Let's access all the functions named `function` from this scope!
-        print!("called `my::indirect_call()`, that\n> ");
+    pub fn llamada_indirecta() {
+        // ¡Accedamos a todas las funciones llamadas `función` desde este alcance!
+        print!("`mi::llamada_indirecta()` llamada,\n> ");
         
-        // The `self` keyword refers to the current module scope - in this case `my`.
-        // Calling `self::function()` and calling `function()` directly both give
-        // the same result, because they refer to the same function.
-        self::function();
-        function();
+        // La palabra clave `self` se refiere al alcance del módulo actual, en este
+        // caso, `mi`. Llamar a `self::funcion()` y llamar a `funcion()` directamente
+        // dan el mismo resultado, porque se refieren a la misma función.
+        self::funcion();
+        funcion();
         
-        // We can also use `self` to access another module inside `my`:
-        self::cool::function();
+        // También podemos usar `self` para acceder a otro módulo dentro de `mi`:
+        self::genial::funcion();
         
-        // The `super` keyword refers to the parent scope (outside the `my` module).
-        super::function();
+        // La palabra clave `super` se refiere al ámbito principal (fuera del módulo
+        // `mi`).
+        super::funcion();
         
-        // This will bind to the `cool::function` in the *crate* scope.
-        // In this case the crate scope is the outermost scope.
+        // Esto enlazará a la `genial::funcion` en el alcance *crate*. En este caso, el
+        // alcance del crate es el alcance más externo.
         {
-            use crate::cool::function as root_function;
-            root_function();
+            use crate::genial::funcion as funcion_raiz;
+            funcion_raiz();
         }
     }
 }
 
 fn main() {
-    my::indirect_call();
+    mi::llamada_indirecta();
 }
 ```

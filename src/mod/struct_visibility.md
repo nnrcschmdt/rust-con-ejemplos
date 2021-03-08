@@ -1,59 +1,62 @@
-# Struct visibility
+# Visibilidad de estructuras
 
-Structs have an extra level of visibility with their fields. The visibility 
-defaults to private, and can be overridden with the `pub` modifier. This 
-visibility only matters when a struct is accessed from outside the module 
-where it is defined, and has the goal of hiding information (encapsulation).
+Las estructuras tienen un nivel extra de visibilidad con sus campos. La
+visibilidad predeterminada es privada y se puede anular con el modificador
+`pub`. Esta visibilidad solo importa cuando se accede a una estructura desde
+fuera del módulo donde está definida y tiene el objetivo de ocultar información
+(encapsulamiento).
 
 ```rust,editable
-mod my {
-    // A public struct with a public field of generic type `T`
-    pub struct OpenBox<T> {
-        pub contents: T,
+mod mi {
+    // Una estructura pública con un campo público de tipo genérico `T`
+    pub struct CajaAbierta<T> {
+        pub contenidos: T,
     }
 
-    // A public struct with a private field of generic type `T`
+    // Una estructura pública con un campo privado de tipo genérico `T`
     #[allow(dead_code)]
-    pub struct ClosedBox<T> {
-        contents: T,
+    pub struct CajaCerrada<T> {
+        contenidos: T,
     }
 
-    impl<T> ClosedBox<T> {
-        // A public constructor method
-        pub fn new(contents: T) -> ClosedBox<T> {
-            ClosedBox {
-                contents: contents,
+    impl<T> CajaCerrada<T> {
+        // Un método constructor público
+        pub fn new(contenidos: T) -> CajaCerrada<T> {
+            CajaCerrada {
+                contenidos: contenidos,
             }
         }
     }
 }
 
 fn main() {
-    // Public structs with public fields can be constructed as usual
-    let open_box = my::OpenBox { contents: "public information" };
+    // Las estructuras públicas con campos públicos se pueden construir como de
+    // costumbre
+    let caja_abierta = mi::CajaAbierta { contenidos: "información pública" };
 
-    // and their fields can be normally accessed.
-    println!("The open box contains: {}", open_box.contents);
+    // y se puede acceder a sus campos de manera normal.
+    println!("La caja abierta contiene: {}", caja_abierta.contenidos);
 
-    // Public structs with private fields cannot be constructed using field names.
-    // Error! `ClosedBox` has private fields
-    //let closed_box = my::ClosedBox { contents: "classified information" };
-    // TODO ^ Try uncommenting this line
+    // Las estructuras públicas con campos privados no se pueden construir utilizando
+    // nombres de campo. ¡Error! CajaCerrada tiene campos privados
+    //let caja_cerrada = mi::CajaCerrada { contenidos: "información clasificada" };
+    // TODO ^ Intenta descomentar esta línea
 
-    // However, structs with private fields can be created using
-    // public constructors
-    let _closed_box = my::ClosedBox::new("classified information");
+    // Sin embargo, las estructuras con campos privados se pueden crear utilizando
+    // constructores públicos.
+    let _caja_cerrada = mi::CajaCerrada::new("información clasificada");
 
-    // and the private fields of a public struct cannot be accessed.
-    // Error! The `contents` field is private
-    //println!("The closed box contains: {}", _closed_box.contents);
-    // TODO ^ Try uncommenting this line
+    // y no se puede acceder a los campos privados de una estructura pública.
+    // ¡Error! El campo `contenidos` es privado
+    //println!("La caja cerrada contiene: {}", _caja_cerrada.contenidos);
+    // TODO ^ Intenta descomentar esta línea
 }
 ```
 
-### See also:
+### Ve también:
 
-[generics][generics] and [methods][methods]
+<!--[genéricos][generics] y -->
+[métodos][methods]
 
 [generics]: ../generics.md
 [methods]: ../fn/methods.md

@@ -1,128 +1,129 @@
-# Visibility
+# Visibilidad
 
-By default, the items in a module have private visibility, but this can be
-overridden with the `pub` modifier. Only the public items of a module can be
-accessed from outside the module scope.
+De forma predeterminada, los elementos de un módulo tienen visibilidad privada,
+pero esto se puede anular con el modificador `pub`. Solo se puede acceder a los
+elementos públicos de un módulo desde fuera del alcance del módulo.
 
 ```rust,editable
-// A module named `my_mod`
-mod my_mod {
-    // Items in modules default to private visibility.
-    fn private_function() {
-        println!("called `my_mod::private_function()`");
+// Un módulo llamado `mi_mod`
+mod mi_mod {
+    // Los elementos de los módulos tienen visibilidad privada de forma predeterminada.
+    fn funcion_privada() {
+        println!("`mi_mod::funcion_privada()` llamada");
     }
 
-    // Use the `pub` modifier to override default visibility.
-    pub fn function() {
-        println!("called `my_mod::function()`");
+    // Utiliza el modificador `pub` para anular la visibilidad predeterminada.
+    pub fn funcion() {
+        println!("`mi_mod::funcion()` llamada");
     }
 
-    // Items can access other items in the same module,
-    // even when private.
-    pub fn indirect_access() {
-        print!("called `my_mod::indirect_access()`, that\n> ");
-        private_function();
+    // Los elementos pueden acceder a otros elementos en el mismo módulo, incluso cuando
+    // son privados.
+    pub fn acceso_inderecto() {
+        print!("`mi_mod::acceso_inderecto()` llamada,\n> ");
+        funcion_privada();
     }
 
-    // Modules can also be nested
-    pub mod nested {
-        pub fn function() {
-            println!("called `my_mod::nested::function()`");
+    // Los módulos también se pueden anidar
+    pub mod anidado {
+        pub fn funcion() {
+            println!("`mi_mod::anidado::funcion()` llamada");
         }
 
         #[allow(dead_code)]
-        fn private_function() {
-            println!("called `my_mod::nested::private_function()`");
+        fn funcion_privada() {
+            println!("`mi_mod::anidado::funcion_privada()` llamada");
         }
 
-        // Functions declared using `pub(in path)` syntax are only visible
-        // within the given path. `path` must be a parent or ancestor module
-        pub(in crate::my_mod) fn public_function_in_my_mod() {
-            print!("called `my_mod::nested::public_function_in_my_mod()`, that\n> ");
-            public_function_in_nested();
+        // Las funciones declaradas usando la sintaxis `pub (in ruta)` solo son visibles
+        // dentro de la ruta dada. `ruta` debe ser un módulo principal o antepasado
+        pub(in crate::mi_mod) fn funcion_publica_en_mi_mod() {
+            print!("`mi_mod::anidado::funcion_publica_en_mi_mod() llamada`,\n> ");
+            funcion_publica_en_anidado();
         }
 
-        // Functions declared using `pub(self)` syntax are only visible within
-        // the current module, which is the same as leaving them private
-        pub(self) fn public_function_in_nested() {
-            println!("called `my_mod::nested::public_function_in_nested()`");
+        // Las funciones declaradas usando la sintaxis `pub(self)` solo son visibles
+        // dentro del módulo actual, que es lo mismo que dejarlas privadas
+        pub(self) fn funcion_publica_en_anidado() {
+            println!("`mi_mod::anidado::funcion_publica_en_anidado()` llamada");
         }
 
-        // Functions declared using `pub(super)` syntax are only visible within
-        // the parent module
-        pub(super) fn public_function_in_super_mod() {
-            println!("called `my_mod::nested::public_function_in_super_mod()`");
+        // Las funciones declaradas usando la sintaxis `pub(super)` solo son visibles
+        // dentro del módulo padre
+        pub(super) fn funcion_publica_en_super_mod() {
+            println!("`mi_mod::anidado::funcion_publica_en_super_mod()` llamada");
         }
     }
 
-    pub fn call_public_function_in_my_mod() {
-        print!("called `my_mod::call_public_function_in_my_mod()`, that\n> ");
-        nested::public_function_in_my_mod();
+    pub fn llama_funcion_publica_en_mi_mod() {
+        print!("`mi_mod::llama_funcion_publica_en_mi_mod()` llamada,\n> ");
+        anidado::funcion_publica_en_mi_mod();
         print!("> ");
-        nested::public_function_in_super_mod();
+        anidado::funcion_publica_en_super_mod();
     }
 
-    // pub(crate) makes functions visible only within the current crate
-    pub(crate) fn public_function_in_crate() {
-        println!("called `my_mod::public_function_in_crate()`");
+    // pub(crate) hace que las funciones sean visibles solo dentro del crate actual
+    pub(crate) fn funcion_publica_en_crate() {
+        println!("`mi_mod::funcion_publica_en_crate()` llamada");
     }
 
-    // Nested modules follow the same rules for visibility
-    mod private_nested {
+    // Los módulos anidados siguen las mismas reglas de visibilidad
+    mod anidado_privado {
         #[allow(dead_code)]
-        pub fn function() {
-            println!("called `my_mod::private_nested::function()`");
+        pub fn funcion() {
+            println!("`mi_mod::anidado_privado::funcion()` llamada");
         }
 
-        // Private parent items will still restrict the visibility of a child item,
-        // even if it is declared as visible within a bigger scope.
+        // Los elementos principales privados seguirán restringiendo la visibilidad de
+        // un elemento secundario, incluso si se declara como visible dentro de un
+        // ámbito más amplio. 
         #[allow(dead_code)]
-        pub(crate) fn restricted_function() {
-            println!("called `my_mod::private_nested::restricted_function()`");
+        pub(crate) fn funcion_restringida() {
+            println!("`mi_mod::anidado_privado::funcion_restringida()` llamada");
         }
     }
 }
 
-fn function() {
-    println!("called `function()`");
+fn funcion() {
+    println!("`funcion()` llamada");
 }
 
 fn main() {
-    // Modules allow disambiguation between items that have the same name.
-    function();
-    my_mod::function();
+    // Los módulos permiten la desambiguación entre elementos que tienen el mismo nombre.
+    funcion();
+    mi_mod::funcion();
 
-    // Public items, including those inside nested modules, can be
-    // accessed from outside the parent module.
-    my_mod::indirect_access();
-    my_mod::nested::function();
-    my_mod::call_public_function_in_my_mod();
+    // Se puede acceder a los elementos públicos, incluidos los que se encuentran dentro
+    // de los módulos anidados, desde fuera del módulo principal. 
+    mi_mod::acceso_inderecto();
+    mi_mod::anidado::funcion();
+    mi_mod::llama_funcion_publica_en_mi_mod();
 
-    // pub(crate) items can be called from anywhere in the same crate
-    my_mod::public_function_in_crate();
+    // Los elementos pub(crate) se pueden llamar desde cualquier lugar del mismo crate
+    mi_mod::funcion_publica_en_crate();
 
-    // pub(in path) items can only be called from within the module specified
-    // Error! function `public_function_in_my_mod` is private
-    //my_mod::nested::public_function_in_my_mod();
-    // TODO ^ Try uncommenting this line
+    // Los elementos pub(in ruta) solo se pueden llamar desde el módulo especificado
+    // ¡Error! la función `funcion_publica_en_mi_mod` es privada
+    //mi_mod::anidado::funcion_publica_en_mi_mod();
+    // TODO ^ Intenta descomentar esta línea
 
     // Private items of a module cannot be directly accessed, even if
-    // nested in a public module:
+    // anidado in a public module:
 
-    // Error! `private_function` is private
-    //my_mod::private_function();
-    // TODO ^ Try uncommenting this line
+    // ¡Error! la función `funcion_privada` es privada
+    //mi_mod::funcion_privada();
+    // TODO ^ Intenta descomentar esta línea
 
-    // Error! `private_function` is private
-    //my_mod::nested::private_function();
-    // TODO ^ Try uncommenting this line
+    // ¡Error! la función `funcion_privada` es privada
+    //mi_mod::anidado::funcion_privada();
+    // TODO ^ Intenta descomentar esta línea
 
-    // Error! `private_nested` is a private module
-    //my_mod::private_nested::function();
-    // TODO ^ Try uncommenting this line
+    // ¡Error! el módulo `anidado_privado` es un módulo privado
+    //mi_mod::anidado_privado::funcion();
+    // TODO ^ Intenta descomentar esta línea
 
-    // Error! `private_nested` is a private module
-    //my_mod::private_nested::restricted_function();
-    // TODO ^ Try uncommenting this line
+    // ¡Error! el módulo `anidado_privado` es un módulo privado
+    //mi_mod::anidado_privado::funcion_restringida;
+    // TODO ^ Intenta descomentar esta línea
 }
 ```

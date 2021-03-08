@@ -1,96 +1,96 @@
-# File hierarchy
+# Jerarquía de archivos
 
-Modules can be mapped to a file/directory hierarchy. Let's break down the
-[visibility example][visibility] in files:
+Los módulos se pueden asignar a una jerarquía de archivos/directorios.
+Analicemos el [ejemplo de visibilidad][visibility] en archivos:
 
 ```shell
 $ tree .
 .
-|-- my
-|   |-- inaccessible.rs
+|-- mi
+|   |-- inaccesible.rs
 |   |-- mod.rs
-|   `-- nested.rs
-`-- split.rs
+|   `-- anidado.rs
+`-- partido.rs
 ```
 
-In `split.rs`:
+En `partido.rs`:
 
 ```rust,ignore
-// This declaration will look for a file named `my.rs` or `my/mod.rs` and will
-// insert its contents inside a module named `my` under this scope
-mod my;
+// Esta declaración buscará un archivo llamado `mi.rs` o `mi/mod.rs` e insertará su
+// contenido dentro de un módulo llamado `mi` bajo este alcance
+mod mi;
 
 fn function() {
-    println!("called `function()`");
+    println!("`function()` llamada");
 }
 
 fn main() {
-    my::function();
+    mi::function();
 
     function();
 
-    my::indirect_access();
+    mi::acceso_indirecto();
 
-    my::nested::function();
+    mi::anidado::function();
 }
 
 ```
 
-In `my/mod.rs`:
+En `mi/mod.rs`:
 
 ```rust,ignore
-// Similarly `mod inaccessible` and `mod nested` will locate the `nested.rs`
-// and `inaccessible.rs` files and insert them here under their respective
-// modules
-mod inaccessible;
-pub mod nested;
+// De manera similar, `mod inaccesible` y `mod anidado` ubicarán los archivos
+// `anidado.rs` e `inaccesible.rs` y los insertarán aquí debajo de sus respectivos
+// módulos
+mod inaccesible;
+pub mod anidado;
 
 pub fn function() {
-    println!("called `my::function()`");
+    println!("`mi::function()` llamada");
 }
 
-fn private_function() {
-    println!("called `my::private_function()`");
+fn funcion_privada() {
+    println!("`mi::funcion_privada()` llamada");
 }
 
-pub fn indirect_access() {
-    print!("called `my::indirect_access()`, that\n> ");
+pub fn acceso_indirecto() {
+    print!("`mi::acceso_indirecto()` llamada,\n> ");
 
-    private_function();
+    funcion_privada();
 }
 ```
 
-In `my/nested.rs`:
+En `mi/anidado.rs`:
 
 ```rust,ignore
 pub fn function() {
-    println!("called `my::nested::function()`");
+    println!("`mi::anidado::function()` llamada");
 }
 
 #[allow(dead_code)]
-fn private_function() {
-    println!("called `my::nested::private_function()`");
+fn funcion_privada() {
+    println!("`mi::anidado::funcion_privada()` llamada");
 }
 ```
 
-In `my/inaccessible.rs`:
+En `mi/inaccesible.rs`:
 
 ```rust,ignore
 #[allow(dead_code)]
-pub fn public_function() {
-    println!("called `my::inaccessible::public_function()`");
+pub fn funcion_publica() {
+    println!("`mi::inaccesible::funcion_publica()` llamada");
 }
 ```
 
-Let's check that things still work as before:
+Comprobemos que las cosas sigan funcionando como antes:
 
 ```shell
-$ rustc split.rs && ./split
-called `my::function()`
-called `function()`
-called `my::indirect_access()`, that
-> called `my::private_function()`
-called `my::nested::function()`
+$ rustc partido.rs && ./partido
+`mi::function()` llamada
+`function()` llamada
+`mi::acceso_indirecto()` llamada,
+> `mi::funcion_privada()` llamada
+`mi::anidado::function()` llamada
 ```
 
 [visibility]: visibility.md

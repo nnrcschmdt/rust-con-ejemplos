@@ -74,4 +74,10 @@
     - [Funciones de orden superior](fn/hof.md)
     - [Funciones divergentes](fn/diverging.md)
 
+- [Módulos](mod.md)
+    - [Visibilidad](mod/visibility.md)
+    - [Visibilidad de struct](mod/struct_visibility.md)
+    - [La declaración `use`](mod/use.md)
+    - [`super` y `self`](mod/super.md)
+    - [Jerarquía de archivos](mod/split.md)
 

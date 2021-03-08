@@ -1,55 +1,56 @@
-# The `use` declaration
+# La declaración `use`
 
-The `use` declaration can be used to bind a full path to a new name, for easier
-access. It is often used like this:
+La declaración `use` se puede utilizar para enlazar una ruta completa a un
+nuevo nombre, para facilitar el acceso. A menudo se usa así:
 
 ```rust,editable,ignore
-use crate::deeply::nested::{
-    my_first_function,
-    my_second_function,
-    AndATraitType
+use crate::profundamente::anidado::{
+    mi_primera_funcion,
+    mi_segunda_funcion,
+    YUnTipoRasgo
 };
 
 fn main() {
-    my_first_function();
+    mi_primera_funcion();
 }
 ```
 
-You can use the `as` keyword to bind imports to a different name:
+Puedes utilizar la palabra clave `as` para enlazar importaciones a un nombre
+diferente:
 
 ```rust,editable
-// Bind the `deeply::nested::function` path to `other_function`.
-use deeply::nested::function as other_function;
+// Enlaza la ruta `profundamente::anidado::funcion` a `otra_funcion`.
+use profundamente::anidado::funcion as otra_funcion;
 
-fn function() {
-    println!("called `function()`");
+fn funcion() {
+    println!("`funcion()` llamada");
 }
 
-mod deeply {
-    pub mod nested {
-        pub fn function() {
-            println!("called `deeply::nested::function()`");
+mod profundamente {
+    pub mod anidado {
+        pub fn funcion() {
+            println!("`profundamente::anidado::funcion()` llamada");
         }
     }
 }
 
 fn main() {
-    // Easier access to `deeply::nested::function`
-    other_function();
+    // Acceso más fácil a `profundamente::anidado::funcion`
+    otra_funcion();
 
-    println!("Entering block");
+    println!("Ingresando al bloque");
     {
-        // This is equivalent to `use deeply::nested::function as function`.
-        // This `function()` will shadow the outer one.
-        use crate::deeply::nested::function;
+        // Esto es equivalente a `use profundamente::anidado::funcion as funcion`
+        // Esta `funcion()` sombreará la externa.
+        use crate::profundamente::anidado::funcion;
 
-        // `use` bindings have a local scope. In this case, the
-        // shadowing of `function()` is only in this block.
-        function();
+        // Los enlaces `use` tienen un alcance local. En este caso, el sombreado
+        // de `funcion()` está solo en este bloque.
+        funcion();
 
-        println!("Leaving block");
+        println!("Dejando el bloque");
     }
 
-    function();
+    funcion();
 }
 ```

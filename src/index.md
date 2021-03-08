@@ -31,6 +31,8 @@ ejemplos, no olvide [instalar Rust localmente][install] y consultar la
 
 - [Funciones](fn.md) - Aprende sobre métodos, clausuras y funciones de orden superior.
 
+- [Módulos](mod.md) - Organiza código usando módulos
+
 [rust]: https://www.rust-lang.org/es/
 [install]: https://www.rust-lang.org/es/tools/install
 [std]: https://doc.rust-lang.org/std/
